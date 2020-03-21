@@ -28,3 +28,8 @@ i {
   color: #fff;
   display: inline-block;
 }
+.header-front {
+  position: absolute;
+  z-index: 99;
+  width: 100%;
+}

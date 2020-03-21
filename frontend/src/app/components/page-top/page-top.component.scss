@@ -1,0 +1,21 @@
+.set-bg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
+}
+.page-top-section {
+	height: 100%;
+}
+.image-top-section {
+//   position: absolute;
+//   top: 0;
+  width: 100%;
+//   height: inherit;
+}
+.header-text {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+  color: #fff;
+}
