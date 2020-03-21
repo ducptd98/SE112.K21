@@ -1,0 +1,30 @@
+.text-0-8-rem {
+  font-size: 0.7rem;
+}
+.text {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+.dropdown:hover > .dropdown-menu {
+  display: block;
+}
+
+.dropdown > .dropdown-menu.show {
+  display: none;
+}
+.header-top {
+  padding-right: 25px;
+  padding-left: 17px;
+  padding-top: 10px;
+}
+.w-35 {
+  width: 35% !important;
+}
+i {
+  font-size: 1.2rem;
+}
+.top-info {
+  font-size: 14px;
+  color: #fff;
+  display: inline-block;
+}
