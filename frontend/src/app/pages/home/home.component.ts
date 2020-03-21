@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  bindDescriptionsToPagetop: string;
   constructor() { }
 
   ngOnInit() {
+    this.bindDescriptionsToPagetop = 'Search real estate property records, houses, condos, land and more on leramiz.com®.' +
+      'Find property info from the most comprehensive source data.';
   }
 
 }

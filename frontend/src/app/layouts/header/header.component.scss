@@ -7,6 +7,8 @@
 }
 .dropdown:hover > .dropdown-menu {
   display: block;
+  background-color: #fff;
+  opacity: 0.9;
 }
 
 .dropdown > .dropdown-menu.show {
@@ -32,4 +34,11 @@ i {
   position: absolute;
   z-index: 99;
   width: 100%;
+}
+.nav-item:hover .nav-link {
+    color: #30caa0;
+}
+.dropdown-menu .dropdown-item:hover{
+  color: #30caa0;
+  background-color: transparent;
 }

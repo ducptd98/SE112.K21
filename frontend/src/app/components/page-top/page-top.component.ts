@@ -9,11 +9,11 @@ export class PageTopComponent implements OnInit {
 
   @Input() header: string;
   @Input() imgPageTop: string;
+  @Input() descriptions: string;
   @Input() isHomePage: boolean;
   constructor() { }
 
   ngOnInit() {
-    this.isHomePage = this.header === 'Home';
   }
 
 }
