@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { Routes, RouterModule } from '@angular/router';
 import { PageTopComponent } from 'src/app/components/page-top/page-top.component';
+import { FilterSectionComponent } from 'src/app/components/filter-section/filter-section.component';
+import { PropertyCardComponent } from 'src/app/components/property-card/property-card.component';
 
 const routes: Routes = [
   {
@@ -14,7 +16,9 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     HomeComponent,
-    PageTopComponent
+    PageTopComponent,
+    FilterSectionComponent,
+    PropertyCardComponent
   ],
   imports: [
     CommonModule,

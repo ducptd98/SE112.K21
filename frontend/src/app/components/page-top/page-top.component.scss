@@ -2,12 +2,14 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top center;
-  max-height: 700px;
+  max-height: 850px;
+  width: -webkit-fill-available;
+  height: auto;
 }
 .header-text {
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -70%);
   z-index: 99;
   color: #fff;
   text-align: center;
