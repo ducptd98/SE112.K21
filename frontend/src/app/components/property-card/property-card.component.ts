@@ -14,7 +14,6 @@ export class PropertyCardComponent implements OnInit {
 
   ngOnInit() {
     this.srcImage = '../../../assets/properties/'.concat(this.srcImage);
-    console.log('PropertyCardComponent -> ngOnInit -> srcImage', this.srcImage);
   }
 
 }

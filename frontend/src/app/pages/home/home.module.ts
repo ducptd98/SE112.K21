@@ -5,6 +5,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { PageTopComponent } from 'src/app/components/page-top/page-top.component';
 import { FilterSectionComponent } from 'src/app/components/filter-section/filter-section.component';
 import { PropertyCardComponent } from 'src/app/components/property-card/property-card.component';
+import { FeaturedCardComponent } from 'src/app/components/featured-card/featured-card.component';
+import { BrandLogoComponent } from 'src/app/components/brand-logo/brand-logo.component';
+import { OwlModule } from 'ngx-owl-carousel';
 
 const routes: Routes = [
   {
@@ -18,11 +21,14 @@ const routes: Routes = [
     HomeComponent,
     PageTopComponent,
     FilterSectionComponent,
-    PropertyCardComponent
+    PropertyCardComponent,
+    FeaturedCardComponent,
+    BrandLogoComponent
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    OwlModule
   ]
 })
 export class HomeModule { }
