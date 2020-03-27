@@ -5,14 +5,24 @@
   font-size: 1.1rem;
   font-weight: bold;
 }
-.dropdown:hover > .dropdown-menu {
-  display: block;
+
+.dropdown > .dropdown-menu {
   background-color: #fff;
+  opacity: 0;
+  visibility: visible;
+  display: table-column;
+  transition: opacity 600ms, visibility 600ms;
+}
+
+.dropdown:hover  > .dropdown-menu {
+  visibility: visible;
   opacity: 0.9;
+  display: block;
 }
 
 .dropdown > .dropdown-menu.show {
   display: none;
+  // visibility: visible;
 }
 .header-top {
   padding-right: 25px;
@@ -36,9 +46,9 @@ i {
   width: 100%;
 }
 .nav-item:hover .nav-link {
-    color: #30caa0;
+  color: #30caa0;
 }
-.dropdown-menu .dropdown-item:hover{
+.dropdown-menu .dropdown-item:hover {
   color: #30caa0;
   background-color: transparent;
 }

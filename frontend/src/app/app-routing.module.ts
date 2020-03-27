@@ -5,18 +5,24 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule),
-    data: { breadcrumb: 'Trang chủ' }
-  },
-  {
-    path: 'featured',
-    loadChildren: () => import('./pages/featured/featured.module').then(m => m.FeaturedModule),
-    data: { breadcrumb: 'Danh sách nhà' }
+
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
+      {
+        path: 'home',
+        loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule),
+        data: { breadcrumb: 'Trang chủ' }
+      },
+      {
+        path: 'featured',
+        loadChildren: () => import('./pages/featured/featured.module').then(m => m.FeaturedModule),
+        data: { breadcrumb: 'Danh sách nhà' }
+      }
+    ]
   }
 ];
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, PRIMARY_OUTLET, NavigationEnd } from '@angular/router';
-import {filter} from 'rxjs/operators';
-import {map} from 'rxjs/internal/operators';
+import { Router, ActivatedRoute, PRIMARY_OUTLET, NavigationEnd, Event } from '@angular/router';
+import { filter, distinctUntilChanged } from 'rxjs/operators';
+import { IBreadCrumb } from 'src/api/models/breadcrumb.interface';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -9,51 +9,47 @@ import {map} from 'rxjs/internal/operators';
   styleUrls: ['./breadcrumb.component.scss']
 })
 export class BreadcrumbComponent implements OnInit {
-  breadcrumbs;
+  public breadcrumbs: IBreadCrumb[];
 
   constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
-    private router: Router) {
+  ) {
+    this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
   }
 
   ngOnInit() {
-
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .pipe(map(() => this.activatedRoute))
-      .pipe(filter(route => route.outlet === PRIMARY_OUTLET))
-      .pipe(map((route) => {
-        const routeArray = [];
-        while (route.firstChild) {
-          routeArray.push(route.firstChild.snapshot);
-          route = route.firstChild;
-        }
-        return routeArray;
-      }))
-      .subscribe(routeArray => {
-        const snapshot = this.router.routerState.snapshot;
-        let stackUrl = '';
-        this.breadcrumbs = [];
-        for (const route of routeArray) {
-          if (route.url.length === 0) {
-            continue;
-          }
-          const routeData = route.data;
-          const label = routeData.breadcrumb;
-          const params = route.root.params;
-          const url = route.url.length > 1 ? route.url.reduce((res, item) => {
-            res += '/' + item.path;
-            return res;
-          }) : route.url[0].path;
-          stackUrl += url + '/';
-          this.breadcrumbs.push({
-            url: stackUrl,
-            label,
-            params
-          });
-        }
-      });
-
+    this.router.events.pipe(
+      filter((event: Event) => event instanceof NavigationEnd),
+      distinctUntilChanged(),
+    ).subscribe(() => {
+      this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
+    });
   }
 
+  buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): IBreadCrumb[] {
+    let label = route.routeConfig && route.routeConfig.data ? route.routeConfig.data.breadcrumb : '';
+    let path = route.routeConfig && route.routeConfig.data ? route.routeConfig.path : '';
+
+    // If the route is dynamic route such as ':id', remove it
+    const lastRoutePart = path.split('/').pop();
+    const isDynamicRoute = lastRoutePart.startsWith(':');
+    if (isDynamicRoute && !!route.snapshot) {
+      const paramName = lastRoutePart.split(':')[1];
+      path = path.replace(lastRoutePart, route.snapshot.params[paramName]);
+      label = route.snapshot.params[paramName];
+    }
+    const nextUrl = path ? `${url}/${path}` : url;
+
+    const breadcrumb: IBreadCrumb = {
+      label,
+      url: nextUrl,
+    };
+    // Only adding route with non-empty label
+    const newBreadcrumbs = breadcrumb.label ? [...breadcrumbs, breadcrumb] : [...breadcrumbs];
+    if (route.firstChild) {
+      return this.buildBreadCrumb(route.firstChild, nextUrl, newBreadcrumbs);
+    }
+    return newBreadcrumbs;
+  }
 }

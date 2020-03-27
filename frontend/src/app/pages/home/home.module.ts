@@ -4,7 +4,6 @@ import { HomeComponent } from './home.component';
 import { Routes, RouterModule } from '@angular/router';
 import { FilterSectionComponent } from 'src/app/components/filter-section/filter-section.component';
 import { PropertyCardComponent } from 'src/app/components/property-card/property-card.component';
-import { BrandLogoComponent } from 'src/app/components/brand-logo/brand-logo.component';
 import { OwlModule } from 'ngx-owl-carousel';
 import { SharedModule } from 'src/app/shared/shared/shared.module';
 
@@ -19,8 +18,6 @@ const routes: Routes = [
   declarations: [
     HomeComponent,
     FilterSectionComponent,
-    PropertyCardComponent,
-    BrandLogoComponent,
   ],
   imports: [
     CommonModule,

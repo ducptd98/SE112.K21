@@ -8,6 +8,9 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { HomeModule } from './pages/home/home.module';
 import { FeaturedModule } from './pages/featured/featured.module';
 import { SharedModule } from './shared/shared/shared.module';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { SharedModule } from './shared/shared/shared.module';
     AppRoutingModule,
     HomeModule,
     FeaturedModule,
-    SharedModule
+    SharedModule,
+    LoadingBarModule,
+    LoadingBarRouterModule,
+    LoadingBarHttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
