@@ -3,15 +3,16 @@
   background-size: cover;
   background-position: top center;
   max-height: 850px;
-  width: -webkit-fill-available;
-  height: auto;
+  width: 100%;
+  position: relative;
 }
 .header-text {
   position: absolute;
-  left: 50%;
-  transform: translate(-50%, -70%);
+  // left: 40%;
+  top: 45%;
   z-index: 99;
   color: #fff;
+  width: 100%;
   text-align: center;
 }
 h2 {

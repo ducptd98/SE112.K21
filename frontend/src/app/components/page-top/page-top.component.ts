@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-page-top',
@@ -11,9 +12,12 @@ export class PageTopComponent implements OnInit {
   @Input() imgPageTop: string;
   @Input() descriptions: string;
   @Input() isHomePage: boolean;
-  constructor() { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
+    if (this.header == null) {
+      this.header = this.route.snapshot.data.breadcrumb;
+    }
   }
 
 }

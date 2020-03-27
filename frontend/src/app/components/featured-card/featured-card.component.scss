@@ -75,3 +75,19 @@
 .room-info .rf-right {
 	float: right;
 }
+.sale-notic,
+.rent-notic {
+	color: #fff;
+	font-size: 12px;
+	text-transform: uppercase;
+	background: #e94646;
+	padding: 7px 13px;
+	display: inline-block;
+	border-radius: 2px;
+	position: relative;
+	z-index: 3;
+}
+
+.rent-notic {
+	background: #eca643;
+}
