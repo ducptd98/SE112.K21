@@ -1,3 +1,5 @@
+import { RegisterComponent } from './pages/register/register.component';
+import { LoginComponent } from './pages/login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -21,6 +23,16 @@ const routes: Routes = [
         path: 'featured',
         loadChildren: () => import('./pages/featured/featured.module').then(m => m.FeaturedModule),
         data: { breadcrumb: 'Danh sách nhà' }
+      },
+      {
+        path: 'login',
+        component: LoginComponent,
+        data : {breadcrumb: 'Đăng nhập'}
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
+        data : {breadcrumb: 'Đăng kí'}
       }
     ]
   }

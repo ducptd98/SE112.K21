@@ -11,12 +11,17 @@ import { SharedModule } from './shared/shared/shared.module';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +31,8 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
     SharedModule,
     LoadingBarModule,
     LoadingBarRouterModule,
-    LoadingBarHttpClientModule
+    LoadingBarHttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
