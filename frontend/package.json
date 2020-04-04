@@ -23,6 +23,7 @@
     "@ngx-loading-bar/http-client": "^4.2.0",
     "@ngx-loading-bar/router": "^4.2.0",
     "jquery": "^3.4.1",
+    "ng-zorro-antd": "^8.5.2",
     "ngx-owl-carousel": "^2.0.7",
     "owl.carousel": "^2.3.4",
     "rxjs": "~6.4.0",
