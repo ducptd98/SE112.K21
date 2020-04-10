@@ -9,4 +9,8 @@ class Log {
     public static function logWarning($message = null) {
         echo "WARNING: " . $message . "\n";
     }
+
+    public static function logError($message = null) {
+        echo "ERROR: " . $message . "\n";
+    }
 }

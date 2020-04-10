@@ -13,35 +13,12 @@ class Utility
     public $logger;
     public $cookie_path = '';
 
-    // function __construct()
-    // {
-    //     $this->cookie_path = getcwd() . '/cookie.txt';
-    //     $this->logger = new Logger();
-    // }
-
-    // static function getEnv()
-    // {
-    //     $hostname = php_uname("n");
-
-    //     //$env = "";
-
-    //     if (strpos($hostname, "local")) {
-    //         $env = "DEV";
-    //     } elseif (strpos($hostname, "ip-") !== false || strpos($hostname, "-test") !== false) {
-    //         $env = "PRD";
-    //     } else {
-    //         $env = "DEV";
-    //     }
-
-    //     return $env;
-    // }
-
     public static function notifySlack($message =  null)
     {
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, 'https://hooks.slack.com/');
-        // curl_setopt($ch, CURLOPT_URL, 'https://hooks.slack.com/services/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');
+        // curl_setopt($ch, CURLOPT_URL, 'https://hooks.slack.com/services/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');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"text\":\"$message\"}");
@@ -84,7 +61,6 @@ class Utility
         curl_setopt($ch, CURLOPT_MAXREDIRS, 3);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_AUTOREFERER, true);
-        // curl_setopt($ch, CURLOPT_USERAGENT, $this->useragent);
         curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
@@ -94,13 +70,6 @@ class Utility
 
         $contents = curl_exec($ch);
         curl_close($ch);
-
-        // if (empty($contents) && $num < 1) {
-        //     sleep(3);
-        //     // $this->logger->warn($url);
-        //     $num++;
-        //     $contents = $this->getHtml($url, $num);
-        // }
 
         if (env('SAVE_HTML')) {
             file_put_contents($file_name, $contents);
@@ -115,6 +84,27 @@ class Utility
         $string = str_replace(array(
             '*','+'
         ), '',$string);
+        return $string;
+    }
+
+
+    public static function replaceString($string)
+    {
+        $unwanted_array = array('”' => '"', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',
+            'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U',
+            'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c',
+            'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
+            'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y', '�' => '', '”' => '"');
+        $string = trim(strtr($string, $unwanted_array));
+
+        $string = iconv('UTF-8', 'ISO-8859-1//TRANSLIT//IGNORE', $string);
+
+        $string = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $string);
+        $string = preg_replace('!\s+!', ' ', $string);
+
+        $string = str_replace("?????", '', $string);
+        $string = ltrim($string, '-');
+        $string = trim($string);
         return $string;
     }
 }

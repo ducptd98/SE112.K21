@@ -13,14 +13,18 @@ class Product_Model extends Model
     }
 
     public static function getProductLimit($limit =  100 ,  $status ="TODO"){
-        return Product_Model::where('status', $status)->limit($limit)->offset(0)->get();
+        return Product_Model::where('status', $status)->limit($limit)->offset(0)->get()->toArray();
     }
 
-    public static function setProductStatus($id =  null,$status = "TODO"){
-        return Product_Model::whereIn('id', $id)->update(["status"=> $status]);
+    public static function setProductStatus($id =  null,$data =  null){
+        return Product_Model::whereIn('id', $id)->update($data);
     }
 
     public static function truncateProduct(){
         return Product_Model::truncate();
+    }
+
+    public static function coutProduct($where =  nulll){
+        return Product_Model::where($where)->count();
     }
 }

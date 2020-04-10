@@ -2,17 +2,16 @@
 
 namespace App\Jobs;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-
-use phpQuery;
 use App\Helpers\Utility;
 use App\Model\Category_Model;
 use App\Model\Product_Model;
-
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use phpQuery;
+use Log;
 
 class getProductUrl implements ShouldQueue
 {
@@ -45,14 +44,14 @@ class getProductUrl implements ShouldQueue
         if (empty($text)) {
             $text = $doc['div#modal-controller-container main section:eq(1) div:first span:first']->text();
         }
-        $text =  str_replace(array(' ',',','.'), '', $text);
-        $total_item =  (int)$text;
+        $text = str_replace(array(' ', ',', '.'), '', $text);
+        $total_item = (int) $text;
         phpQuery::unloadDocuments();
         $total_page = ceil($total_item / env('ITEM_PAGE'));
 
         $this->parseUrl($this->category, $html, true);
         for ($i = 2; $i <= $total_page; $i++) {
-            $html = Utility::getHtml($this->category->url .'/p' . $i);
+            $html = Utility::getHtml($this->category->url . '/p' . $i);
             $this->parseUrl($this->category, $html);
         }
     }
@@ -72,12 +71,16 @@ class getProductUrl implements ShouldQueue
                     'category1' => $category->category1,
                     'category2' => $category->category2,
                     'category3' => $category->category3,
-                    'category4' => $category->category4,
                     'url' => $url,
                     'url_encode' => md5($url),
                     'status' => 'TODO',
                 );
-                Product_Model::createProduct($data);
+                try
+                {
+                    Product_Model::createProduct($data);
+                } catch (\Illuminate\Database\QueryException $e) {
+                    // Log::logError($e);
+                }
             }
             $status = 'DONE';
         }

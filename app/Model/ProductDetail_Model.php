@@ -15,4 +15,8 @@ class ProductDetail_Model extends Model
     public static function truncateDetail(){
         return ProductDetail_Model::truncate();
     }
+
+    public static function countDetail(){
+        return ProductDetail_Model::count();
+    }
 }

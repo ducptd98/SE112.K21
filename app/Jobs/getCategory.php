@@ -14,7 +14,7 @@ use App\Helpers\Utility;
 use App\Model\Category_Model;
 use phpQuery;
 
-class Category implements ShouldQueue
+class getCategory implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -40,8 +40,7 @@ class Category implements ShouldQueue
     {
         $html = Utility::getHtml($this->start->url);
         
-
-        $doc = phpQuery::newDocumentHTML($html, 'UTF-8');
+        $doc = phpQuery::newDocument($html);
         $mainMenu = $doc['ul.dropdown-navigative-menu>li.lv0'];
         if (sizeof($mainMenu)) {
             Log::debug("<--- Start get Category 1 ---->");
@@ -59,12 +58,11 @@ class Category implements ShouldQueue
                     "url_encode" => md5($url),
                     "status" => $status,
                 ];
-                $ignore = array(
-                    'Men',
-                    'Women',
+                $not_ignore = array(
+                    'Nhà đất bán',
+                    'Nhà đất cho thuê',
                 );
-                if (!in_array($category, $ignore)) {
-                    // $data['ignore_code'] = getIgnoreCode($data);
+                if (in_array($category, $not_ignore)) {
                     $data['id'] = Category_Model::createCategory($data);
                     $this->getCate2($data, $li);
                 }
@@ -93,14 +91,10 @@ class Category implements ShouldQueue
                 $data2['url'] = $url;
                 $data2['url_encode'] = md5($url);
                 $ignore = array(
-                    'Designers',
-                    'New In',
-                    "Black Friday Men's Designer Sale",
-                    "Black Friday Designer Sale",
+                    'String',
 
                 );
                 if (!in_array($category, $ignore)) {
-                    // $data2['ignore_code'] = getIgnoreCode($data2);
                     $data2['id'] = Category_Model::createCategory($data2);
                     $this->getCate3($data2, $li);
                 }
@@ -129,14 +123,10 @@ class Category implements ShouldQueue
                 $data2['url'] = $url;
                 $data2['url_encode'] = md5($url);
                 $ignore = array(
-                    'Designers',
-                    'New In',
-                    "Black Friday Men's Designer Sale",
-                    "Black Friday Designer Sale",
+                    'String',
 
                 );
                 if (!in_array($category, $ignore)) {
-                    // $data2['ignore_code'] = getIgnoreCode($data2);
                     Category_Model::createCategory($data2);
                 }
 

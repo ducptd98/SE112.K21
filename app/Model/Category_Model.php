@@ -8,8 +8,8 @@ class Category_Model extends Model
 {
     protected $table = 'tbl_Category';
     
-    public function getAllCategory(){
-        return Category_Model::all();
+    public static function getCategory($where =  null){
+        return Category_Model::where($where)->get();
     }
 
     public static function createCategory($data  =  null){
