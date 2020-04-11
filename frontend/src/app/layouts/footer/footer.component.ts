@@ -1,5 +1,6 @@
 import { FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { getLocaleDateTimeFormat } from '@angular/common';
 
 @Component({
   selector: 'app-footer',
@@ -11,6 +12,7 @@ export class FooterComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }
