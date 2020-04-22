@@ -42,7 +42,11 @@ class getDetail implements ShouldQueue
 
         $status = 'ERROR';
         $data = array();
+        $data['category_parent'] = $this->product->category_parent;
         $data['url'] = $this->product->url;
+        if ($data['url'] && strpos($data['url'], env('SITE_DOMAIN')) !== false) {
+            $data['url'] = str_replace(env('SITE_DOMAIN'), env('APP_URL'), $data['url']) ;
+        }
         $data['category1'] = $this->product->category1;
         $data['category2'] = $this->product->category2;
         $data['category3'] = $this->product->category3;

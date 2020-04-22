@@ -16,7 +16,7 @@ class CreateTblDetailTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('url', 500)->nullable()->default('');
-			$table->string('product_code', 50)->nullable()->default('');
+			$table->text('category_parent', 65535)->nullable();
 			$table->string('name')->nullable()->default('');
 			$table->string('contact')->nullable()->default('');
 			$table->string('address')->nullable()->default('');

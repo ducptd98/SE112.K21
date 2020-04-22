@@ -16,3 +16,10 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//Categories
+$this->resource('categories', 'Admin\CategoryController');
+
+//Products
+$this->resource('product', 'Admin\ProductController');
+$this->get('product/{parent_category}/{limit}/{offset}', 'Admin\ProductController@index');

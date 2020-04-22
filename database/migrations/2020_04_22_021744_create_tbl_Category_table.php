@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTblProductTable extends Migration {
+class CreateTblCategoryTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,15 +12,17 @@ class CreateTblProductTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('tbl_Product', function(Blueprint $table)
+		Schema::create('tbl_Category', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->string('category1')->nullable();
-			$table->string('category2')->nullable()->default('');
-			$table->string('category3')->nullable()->default('');
+			$table->string('category2')->nullable();
+			$table->string('category3')->nullable();
+			$table->string('url', 500)->nullable();
+			$table->string('url_encode', 200)->nullable();
+			$table->text('parent_category', 65535)->nullable();
+			$table->string('url_site', 200)->nullable()->index('ignore_code');
 			$table->string('status')->nullable()->default('TODO')->index('status');
-			$table->string('url', 500)->nullable()->default('');
-			$table->string('url_encode')->nullable()->default('')->unique('url_encode');
 			$table->timestamps();
 		});
 	}
@@ -33,7 +35,7 @@ class CreateTblProductTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('tbl_Product');
+		Schema::drop('tbl_Category');
 	}
 
 }

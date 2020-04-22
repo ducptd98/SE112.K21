@@ -52,10 +52,14 @@ class getCategory implements ShouldQueue
                 if ($url && strpos($url, env('SITE_DOMAIN')) === false) {
                     $url = env('SITE_DOMAIN') . $url;
                 }
+                if ($url && strpos($url, env('SITE_DOMAIN')) !== false) {
+                    $url_site = str_replace(env('SITE_DOMAIN'), env('APP_URL'), $url) ;
+                }
                 $data = [
                     "category1" => str_replace('%', '', $category),
                     "url" => $url,
                     "url_encode" => md5($url),
+                    "url_site" => $url_site,
                     "status" => $status,
                 ];
                 $not_ignore = array(
@@ -87,9 +91,14 @@ class getCategory implements ShouldQueue
                 if ($url && strpos($url, env('SITE_DOMAIN')) === false) {
                     $url = env('SITE_DOMAIN') . $url;
                 }
+                if ($url && strpos($url, env('SITE_DOMAIN')) !== false) {
+                    $url_site = str_replace(env('SITE_DOMAIN'), env('APP_URL'), $url) ;
+                }
                 $data2['category2'] = $category;
                 $data2['url'] = $url;
                 $data2['url_encode'] = md5($url);
+                $data2["url_site"] = $url_site;
+                $data2["parent_category"] = $data['url_encode'];
                 $ignore = array(
                     'String',
 
@@ -119,9 +128,14 @@ class getCategory implements ShouldQueue
                 if ($url && strpos($url, env('SITE_DOMAIN')) === false) {
                     $url = env('SITE_DOMAIN') . $url;
                 }
+                if ($url && strpos($url, env('SITE_DOMAIN')) !== false) {
+                    $url_site = str_replace(env('SITE_DOMAIN'), env('APP_URL'), $url) ;
+                }
                 $data2['category3'] = $category;
                 $data2['url'] = $url;
                 $data2['url_encode'] = md5($url);
+                $data2["url_site"] = $url_site;
+                $data2["parent_category"] = $data['url_encode'];
                 $ignore = array(
                     'String',
 

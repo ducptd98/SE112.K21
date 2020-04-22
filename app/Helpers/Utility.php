@@ -17,8 +17,8 @@ class Utility
     {
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, 'https://hooks.slack.com/');
-        // curl_setopt($ch, CURLOPT_URL, 'https://hooks.slack.com/services/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');
+        // curl_setopt($ch, CURLOPT_URL, 'https://hooks.slack.com/');
+        curl_setopt($ch, CURLOPT_URL, 'https://hooks.slack.com/services/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');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"text\":\"$message\"}");

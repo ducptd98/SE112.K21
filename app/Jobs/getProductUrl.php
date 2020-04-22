@@ -71,6 +71,7 @@ class getProductUrl implements ShouldQueue
                     'category1' => $category->category1,
                     'category2' => $category->category2,
                     'category3' => $category->category3,
+                    'category_parent' => $category->url_encode,
                     'url' => $url,
                     'url_encode' => md5($url),
                     'status' => 'TODO',

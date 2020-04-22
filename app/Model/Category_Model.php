@@ -9,7 +9,9 @@ class Category_Model extends Model
     protected $table = 'tbl_Category';
     
     public static function getCategory($where =  null){
-        return Category_Model::where($where)->get();
+        if (!empty($where)) {
+            return Category_Model::where($where)->get();
+        } return Category_Model::get();
     }
 
     public static function createCategory($data  =  null){
