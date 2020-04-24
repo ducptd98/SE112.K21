@@ -8,11 +8,11 @@ import { getLocaleDateTimeFormat } from '@angular/common';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-
+  currentTime: string;
   constructor() { }
 
   ngOnInit() {
-
+    this.currentTime = Date.now().toLocaleString();
   }
 
 }

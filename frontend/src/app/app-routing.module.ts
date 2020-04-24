@@ -25,6 +25,11 @@ const routes: Routes = [
         data: { breadcrumb: 'Danh sách nhà' }
       },
       {
+        path: 'category',
+        loadChildren: () => import('./pages/category/category.module').then(m => m.CategoryModule),
+        data: { breadcrumb: 'Danh sách loại nhà' }
+      },
+      {
         path: 'login',
         component: LoginComponent,
         data : {breadcrumb: 'Đăng nhập'}

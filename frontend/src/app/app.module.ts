@@ -7,10 +7,9 @@ import { HeaderComponent } from './layouts/header/header.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { HomeModule } from './pages/home/home.module';
 import { FeaturedModule } from './pages/featured/featured.module';
-import { SharedModule } from './shared/shared/shared.module';
+import { SharedModule } from './shared/shared.module';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
-import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -18,6 +17,7 @@ import { IconsProviderModule } from './icons-provider.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoopNumberPipe } from './utilities/loop-number.pipe';
 // import { registerLocaleData } from '@angular/common';
 // import en from '@angular/common/locales/en';
 
@@ -39,7 +39,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SharedModule,
     LoadingBarModule,
     LoadingBarRouterModule,
-    LoadingBarHttpClientModule,
     ReactiveFormsModule,
     IconsProviderModule,
     NgZorroAntdModule,

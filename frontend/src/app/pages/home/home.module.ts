@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { FilterSectionComponent } from 'src/app/components/filter-section/filter-section.component';
 import { PropertyCardComponent } from 'src/app/components/property-card/property-card.component';
 import { OwlModule } from 'ngx-owl-carousel';
-import { SharedModule } from 'src/app/shared/shared/shared.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   {

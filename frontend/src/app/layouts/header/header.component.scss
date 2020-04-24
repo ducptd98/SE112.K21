@@ -9,14 +9,12 @@
 .dropdown > .dropdown-menu {
   background-color: #fff;
   opacity: 0;
-  visibility: visible;
-  display: table-column;
+  display: none;
   transition: opacity 600ms, visibility 600ms;
 }
 
-.dropdown:hover  > .dropdown-menu {
-  visibility: visible;
-  opacity: 0.9;
+.dropdown:hover > .dropdown-menu {
+  opacity: 1;
   display: block;
 }
 
@@ -51,4 +49,7 @@ i {
 .dropdown-menu .dropdown-item:hover {
   color: #30caa0;
   background-color: transparent;
+}
+.active a{
+  color: #30caa0 !important;
 }

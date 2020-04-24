@@ -2,8 +2,7 @@
 	text-align: center;
 }
 
-.site-pagination a,
-.site-pagination span {
+.site-pagination div {
 	width: 40px;
 	height: 40px;
 	display: inline-block;
@@ -16,15 +15,18 @@
 	-webkit-transition: all 0.4s;
 	-o-transition: all 0.4s;
 	transition: all 0.4s;
+	cursor: pointer;
 }
 
-.site-pagination span,
-.site-pagination span:hover,
-.site-pagination a:hover {
+.site-pagination div:hover {
 	color: #30caa0;
 	border-color: #30caa0;
 }
 
-.site-pagination a:last-child {
-	margin-right: 0;
+// .site-pagination a:last-child {
+// 	margin-right: 0;
+// }
+.active {
+	color: #30caa0 !important;
+	border-color: #30caa0 !important;
 }
