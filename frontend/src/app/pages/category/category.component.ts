@@ -1,6 +1,7 @@
+import { Subscription } from 'rxjs';
 import { ICategory } from './../../../api/models/category.model';
 import { CategoryService } from './../../../api/services/category.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 
 @Component({
@@ -8,13 +9,18 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent implements OnInit {
+export class CategoryComponent implements OnInit, OnDestroy {
   lstCate = new Array<ICategory>();
   filterCase = new Array<ICategory>();
   loading = false;
   curPage = 1;
 
+  subscription = new Subscription();
+
   constructor(private cateService: CategoryService, private loadingBar: LoadingBarService) {
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   ngOnInit() {
@@ -23,22 +29,24 @@ export class CategoryComponent implements OnInit {
   loadData() {
     this.loading = true;
     // this.loadingBar.start();
-    this.cateService.getAllNotPaging().subscribe(
+    const cateSub = this.cateService.getAllNotPaging().subscribe(
       data => {
         data.forEach(item => this.lstCate.push(item));
         // this.loadingBar.complete();
-        this.loading = false;
       },
       err => console.error('@@@ getAllNotPaging err ', err),
-      () => this.filterCase = this.lstCate.slice(0, 6)
+      () => { this.filterCase = this.lstCate.slice(0, 6); this.loading = false; }
     );
+    this.subscription.add(cateSub);
   }
 
   changeCurPage(e) {
-    const { pageNumber, limit, offset } = e;
-    const begin = limit * (pageNumber - 1);
+    // const { pageNumber, limit, offset } = e;
+    const pageNumber = e;
+    const begin = 6 * (pageNumber - 1);
     this.curPage = pageNumber;
-    const end = begin + limit;
+    const end = begin + 6;
     this.filterCase = this.lstCate.slice(begin, end);
+
   }
 }

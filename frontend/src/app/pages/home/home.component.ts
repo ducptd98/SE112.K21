@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ProductService } from './../../../api/services/product.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
-  bindDescriptionsToPagetop: string;
+  bindDescriptionsToPagetop = 'Tìm kiếm nhà đất, thông tin bất động sản ở từng khu vực trọng điểm';
   mySlideOptions = { items: 1, dots: true, nav: false, autoplay: true, loop: true };
   data = [
     {
@@ -35,11 +37,56 @@ export class HomeComponent implements OnInit {
       img: 'review/1.jpg'
     },
   ];
-  constructor() { }
+
+  products = [];
+  subscription = new Subscription();
+  cateId = '7c913ae0c059165bc22efb1d0aad70a9';
+
+  limit = 6;
+  offset = 0;
+
+  constructor(private prodService: ProductService) { }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   ngOnInit() {
-    this.bindDescriptionsToPagetop = 'Search real estate property records, houses, condos, land and more on leramiz.com®.' +
-      'Find property info from the most comprehensive source data.';
+    this.getProductByCategory(this.cateId, this.limit, this.offset);
+  }
+  getProducts(limit, offset) {
+    const prodSub = this.prodService.getAll(limit, offset).subscribe(
+      data => {
+        this.products = data;
+      },
+      err => console.log('@@@ getProducts', err));
+    this.subscription.add(prodSub);
+  }
+  getById(prodId: string) {
+    const prodSub = this.prodService.getProduct(prodId).subscribe(
+      data => {
+        console.log('@@@ prod by Id', data);
+
+
+      },
+      err => console.log('@@@ getById', err));
+    this.subscription.add(prodSub);
+  }
+
+  getProductByCategory(cateId: string, limit: number, offset: number) {
+    const prodSub = this.prodService.getProductByCategory(cateId, limit, offset).subscribe(
+      data => {
+        // console.log('@@@ prod by cateId', data);
+      },
+      err => console.log('@@@ getProductByCategory', err));
+    this.subscription.add(prodSub);
+  }
+  changeCurPage(page: number) {
+    this.offset = (page - 1) * this.limit;
+    // page 1: off = (1-1)*5 = 0
+    // page 2: off = (2-1)*5 = 5
+    // page 3: off = (3-1)*5 = 10
+    // page 1: off = (1-1)*5 = 0
+    this.getProducts(this.limit, this.offset);
   }
 
 }

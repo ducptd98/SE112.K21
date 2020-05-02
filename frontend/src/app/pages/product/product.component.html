@@ -1,0 +1,14 @@
+<app-page-top [isHomePage]="false" imgPageTop="../../../assets/page-top-bg.png"></app-page-top>
+<div class="container">
+    <div class="row justify-content-center loading-container" *ngIf="loading">
+        <ngx-loading-bar [diameter]="'50px'" [color]="'red'" [includeBar]="false" [fixed]="false"></ngx-loading-bar>
+    </div>
+    <div class="" *ngIf="!loading">
+        <app-breadcrumb></app-breadcrumb>
+
+        <!-- <app-pagination [data]="products" (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination> -->
+        <ngb-pagination [collectionSize]="products.length" [(page)]="curPage" [maxSize]="6" [rotate]="true"
+            [boundaryLinks]="true" (pageChange)="changeCurPage($event)" [pageSize]="this.limit">
+        </ngb-pagination>
+    </div>
+</div>

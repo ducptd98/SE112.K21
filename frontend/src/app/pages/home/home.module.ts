@@ -1,3 +1,6 @@
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CategoryService } from './../../../api/services/category.service';
+import { ProductService } from './../../../api/services/product.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
@@ -6,6 +9,7 @@ import { FilterSectionComponent } from 'src/app/components/filter-section/filter
 import { PropertyCardComponent } from 'src/app/components/property-card/property-card.component';
 import { OwlModule } from 'ngx-owl-carousel';
 import { SharedModule } from 'src/app/shared/shared.module';
+import HttpConfigInterceptor from 'src/app/utilities/httpconfig.interceptor';
 
 const routes: Routes = [
   {
@@ -24,6 +28,11 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     OwlModule,
     SharedModule
+  ],
+  providers: [
+    ProductService,
+    CategoryService,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
   ]
 })
 export class HomeModule { }

@@ -11,6 +11,7 @@ import { PropertyCardComponent } from 'src/app/components/property-card/property
 import { LoadingBarModule, LoadingBarComponent } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -30,7 +31,9 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
     OwlModule,
     LoadingBarModule,
     LoadingBarRouterModule,
-    LoadingBarHttpClientModule
+    LoadingBarHttpClientModule,
+    NgbPaginationModule,
+    NgbAlertModule
   ],
   exports: [
     PageTopComponent,
@@ -40,7 +43,9 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
     PropertyCardComponent,
     BreadcrumbComponent,
     LoadingBarComponent,
-    LoopNumberPipe
+    LoopNumberPipe,
+    NgbPaginationModule,
+    NgbAlertModule
   ]
 })
 export class SharedModule { }

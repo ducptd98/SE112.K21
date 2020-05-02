@@ -1,7 +1,9 @@
 <app-page-top [isHomePage]="false" imgPageTop="../../../assets/page-top-bg.png"></app-page-top>
 <div class="container">
     <div class="row justify-content-center loading-container" *ngIf="loading">
-        <ngx-loading-bar [diameter]="'50px'" [color]="'red'" [includeBar]="false" [fixed]="false"></ngx-loading-bar>
+        <div class="spinner-border text-success mt-2" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
     </div>
     <div class="" *ngIf="!loading">
         <app-breadcrumb></app-breadcrumb>
@@ -15,6 +17,8 @@
                 </div>
             </div>
         </div>
-        <app-pagination [data]="lstCate" (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
+        <ngb-pagination [collectionSize]="lstCate.length" [(page)]="curPage" [pageSize]="6" [rotate]="true"
+            [boundaryLinks]="true" [maxSize]="6" (pageChange)="changeCurPage($event)">
+        </ngb-pagination>
     </div>
 </div>

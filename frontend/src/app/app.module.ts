@@ -17,7 +17,6 @@ import { IconsProviderModule } from './icons-provider.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoopNumberPipe } from './utilities/loop-number.pipe';
 // import { registerLocaleData } from '@angular/common';
 // import en from '@angular/common/locales/en';
 

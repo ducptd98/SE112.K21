@@ -1,7 +1,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="site-pagination pb-5">
-            <div *ngFor="let key of page | loopNumber" (click)="PageChanged(key)" [ngClass]="{'active': curPage === key}">{{key}}</div>
+            <div *ngFor="let key of page | loopNumber | slice:totalRecord*(curPage-1):(page-1) * totalRecord + totalRecord"
+                (click)="PageChanged(key)" [ngClass]="{'active': curPage === key}">{{key}}</div>
             <div><i class="fa fa-angle-right"></i></div>
         </div>
     </div>
