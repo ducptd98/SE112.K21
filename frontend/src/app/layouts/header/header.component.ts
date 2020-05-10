@@ -11,21 +11,21 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   loading = false;
-  lv1 = new Array<ICategory>();
-  lv2 = new Array<ICategory>();
+  lv1 = new Array<any>();
+  lv2 = new Array<any>();
 
   Rent: ICategory;
   Sale: ICategory;
 
   selectedItem: ICategory;
 
-  subscription = new Subscription();
+  subscription: Subscription[] = [];
 
   constructor(private cateService: CategoryService) {
     this.loadData();
   }
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription.forEach(item => item.unsubscribe());
   }
 
   ngOnInit() {
@@ -53,21 +53,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.getRentProduct();
       }
     );
-    this.subscription.add(cateSubscription);
+    this.subscription.push(cateSubscription);
   }
   getSaleProduct() {
     const cateSubscription = this.cateService.getCategoryByParentCategory(this.Sale.url_encode).subscribe(
-      data => this.lv1 = data,
+      data => this.lv1 = data.map(item => {
+        const title = item.url_site.split('/')[3];
+        return Object.assign(item, { title });
+      }),
       err => console.error('@@@ getSaleProduct', err)
     );
-    this.subscription.add(cateSubscription);
+    this.subscription.push(cateSubscription);
   }
 
   getRentProduct() {
     const cateSubscription = this.cateService.getCategoryByParentCategory(this.Rent.url_encode).subscribe(
-      data => this.lv2 = data,
+      data => this.lv2 = data.map(item => {
+        const title = item.url_site.split('/')[3];
+        return Object.assign(item, { title });
+      }),
       err => console.error('@@@ getRentProduct', err)
     );
-    this.subscription.add(cateSubscription);
+    this.subscription.push(cateSubscription);
   }
 }

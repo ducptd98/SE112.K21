@@ -58,8 +58,8 @@
                             Nhà đất bán
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownCategory">
-                            <a *ngFor="let itemLv1 of lv1" class="dropdown-item"
-                                [routerLink]="['/category/'+itemLv1.id]">{{itemLv1.category2}}</a>
+                            <a *ngFor="let itemLv1 of lv1" class="dropdown-item" routerLinkActive="active"
+                                [routerLink]="['/product/'+itemLv1.title,{cateId: itemLv1.url_encode}]">{{itemLv1.category2}}</a>
                         </div>
                     </li>
                     <!-- <li class="nav-item dropdown" routerLinkActive="active">

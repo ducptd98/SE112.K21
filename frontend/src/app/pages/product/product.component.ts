@@ -1,6 +1,8 @@
 import { Subscription } from 'rxjs';
 import { ProductService } from './../../../api/services/product.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product',
@@ -9,18 +11,26 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class ProductComponent implements OnInit, OnDestroy {
   loading = false;
-  subscription = new Subscription();
+  subscription: Subscription[] = [];
   limit = 6;
   offset = 0;
   products = [];
   curPage = 1;
+  cateId = '';
 
-  constructor(private prodService: ProductService) { }
+  constructor(private prodService: ProductService, private route: ActivatedRoute) {
+
+
+  }
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription.forEach(item => item.unsubscribe());
   }
 
   ngOnInit() {
+    const routeSub = this.route.params.subscribe(routerParam => {
+      this.getProductByCategory(routerParam.cateId, 6, 0);
+    });
+    this.subscription.push(routeSub);
   }
 
   getProducts(limit, offset) {
@@ -29,7 +39,7 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.products = data;
       },
       err => console.log('@@@ getProducts', err));
-    this.subscription.add(prodSub);
+    this.subscription.push(prodSub);
   }
   getById(prodId: string) {
     const prodSub = this.prodService.getProduct(prodId).subscribe(
@@ -39,16 +49,21 @@ export class ProductComponent implements OnInit, OnDestroy {
 
       },
       err => console.log('@@@ getById', err));
-    this.subscription.add(prodSub);
+    this.subscription.push(prodSub);
   }
 
   getProductByCategory(cateId: string, limit: number, offset: number) {
     const prodSub = this.prodService.getProductByCategory(cateId, limit, offset).subscribe(
       data => {
         // console.log('@@@ prod by cateId', data);
+        this.products = data.map(item => {
+          const images = JSON.parse(item.images);
+          const desc = JSON.parse(item.desc);
+          return Object.assign(item, { images, desc });
+        });
       },
       err => console.log('@@@ getProductByCategory', err));
-    this.subscription.add(prodSub);
+    this.subscription.push(prodSub);
   }
   changeCurPage(page) {
     this.offset = (page - 1) * this.limit;

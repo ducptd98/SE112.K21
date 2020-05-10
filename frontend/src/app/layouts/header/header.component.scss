@@ -50,6 +50,10 @@ i {
   color: #30caa0;
   background-color: transparent;
 }
-.active a{
+.active {
+  .nav-link {
+    color: #30caa0 !important;
+  }
+  background-color: transparent !important;
   color: #30caa0 !important;
 }

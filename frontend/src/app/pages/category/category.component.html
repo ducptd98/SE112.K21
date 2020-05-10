@@ -17,8 +17,6 @@
                 </div>
             </div>
         </div>
-        <ngb-pagination [collectionSize]="lstCate.length" [(page)]="curPage" [pageSize]="6" [rotate]="true"
-            [boundaryLinks]="true" [maxSize]="6" (pageChange)="changeCurPage($event)">
-        </ngb-pagination>
+        <app-pagination [data]="lstCate" (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
     </div>
 </div>

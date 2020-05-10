@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ];
 
   products = [];
-  subscription = new Subscription();
+  subscription: Subscription[] = [];
   cateId = '7c913ae0c059165bc22efb1d0aad70a9';
 
   limit = 6;
@@ -47,11 +47,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(private prodService: ProductService) { }
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription.forEach(item => item.unsubscribe());
   }
 
   ngOnInit() {
-    this.getProductByCategory(this.cateId, this.limit, this.offset);
+    // this.getProductByCategory(this.cateId, this.limit, this.offset);
   }
   getProducts(limit, offset) {
     const prodSub = this.prodService.getAll(limit, offset).subscribe(
@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.products = data;
       },
       err => console.log('@@@ getProducts', err));
-    this.subscription.add(prodSub);
+    this.subscription.push(prodSub);
   }
   getById(prodId: string) {
     const prodSub = this.prodService.getProduct(prodId).subscribe(
@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
       },
       err => console.log('@@@ getById', err));
-    this.subscription.add(prodSub);
+    this.subscription.push(prodSub);
   }
 
   getProductByCategory(cateId: string, limit: number, offset: number) {
@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         // console.log('@@@ prod by cateId', data);
       },
       err => console.log('@@@ getProductByCategory', err));
-    this.subscription.add(prodSub);
+    this.subscription.push(prodSub);
   }
   changeCurPage(page: number) {
     this.offset = (page - 1) * this.limit;

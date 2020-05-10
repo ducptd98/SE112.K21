@@ -17,7 +17,7 @@ export default class HttpConfigInterceptor implements HttpInterceptor {
         return next.handle(req).pipe(
             map((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
-                    console.log('event--->>>', event);
+                    // do something
                 }
                 return event;
             }),

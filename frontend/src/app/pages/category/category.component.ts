@@ -15,12 +15,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
   loading = false;
   curPage = 1;
 
-  subscription = new Subscription();
+  subscription: Subscription[] = [];
 
   constructor(private cateService: CategoryService, private loadingBar: LoadingBarService) {
   }
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription.forEach(item => item.unsubscribe());
   }
 
   ngOnInit() {
@@ -37,7 +37,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
       err => console.error('@@@ getAllNotPaging err ', err),
       () => { this.filterCase = this.lstCate.slice(0, 6); this.loading = false; }
     );
-    this.subscription.add(cateSub);
+    this.subscription.push(cateSub);
   }
 
   changeCurPage(e) {

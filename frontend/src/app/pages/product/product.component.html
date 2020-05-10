@@ -5,10 +5,14 @@
     </div>
     <div class="" *ngIf="!loading">
         <app-breadcrumb></app-breadcrumb>
-
-        <!-- <app-pagination [data]="products" (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination> -->
-        <ngb-pagination [collectionSize]="products.length" [(page)]="curPage" [maxSize]="6" [rotate]="true"
-            [boundaryLinks]="true" (pageChange)="changeCurPage($event)" [pageSize]="this.limit">
-        </ngb-pagination>
+        <div *ngIf="products.length == 0" class="row justify-content-center">
+            <h2>Không có bất kì tin nào</h2>
+        </div>
+        <div *ngIf="products.length > 0" class="">
+            <ul>
+                <li *ngFor="let item of products">{{item.name}}</li>
+            </ul>
+            <app-pagination [data]="products" (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
+        </div>
     </div>
 </div>
