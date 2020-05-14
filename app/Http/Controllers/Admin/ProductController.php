@@ -15,7 +15,8 @@ class ProductController extends Controller
      */
     public function index($parent_category ,$limit, $offset)
     {
-        $products =  Detail_Model::getDetail(['category_parent'=>$parent_category], $limit, $offset);
+
+        $products =  Detail_Model::getPageDetail(['category_parent'=>$parent_category], $limit, $offset);
         return response()->json($products);
     }
 
@@ -49,6 +50,11 @@ class ProductController extends Controller
     public function show($id)
     {
         $products =  Detail_Model::getPageDetail(['id'=>$id]);
+        $return = [
+            'status' => 1,
+            'data' => json_encode($products)
+        ];
+        return $return;
         return response()->json($products);
     }
 

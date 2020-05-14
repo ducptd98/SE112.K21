@@ -23,6 +23,6 @@ Route::group(['middleware' => 'cors'], function () {
     $this->resource('categories', 'Admin\CategoryController');
 
 //Products
-    $this->resource('product', 'Admin\ProductController');
-    $this->get('product/{parent_category}/{limit}/{offset}', 'Admin\ProductController@index');
+    $this->resource('/product', 'Admin\ProductController');
+    $this->get('/product/{parent_category}/{limit}/{offset}', 'Admin\ProductController@index');
 });
