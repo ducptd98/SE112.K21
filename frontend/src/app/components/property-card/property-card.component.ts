@@ -13,7 +13,7 @@ export class PropertyCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.srcImage = '../../../assets/properties/'.concat(this.srcImage);
+    // this.srcImage = '../../../assets/properties/'.concat(this.srcImage);
   }
 
 }

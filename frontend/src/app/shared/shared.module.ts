@@ -1,3 +1,5 @@
+import { ParseCurrencyPipe } from './../utilities/parse-currency.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
 import { LoopNumberPipe } from '../utilities/loop-number.pipe';
 import { BreadcrumbComponent } from 'src/app/components/breadcrumb/breadcrumb.component';
 import { NgModule } from '@angular/core';
@@ -12,7 +14,7 @@ import { LoadingBarModule, LoadingBarComponent } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -24,7 +26,7 @@ import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap'
     PropertyCardComponent,
     BreadcrumbComponent,
     LoopNumberPipe,
-
+    ParseCurrencyPipe
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,13 @@ import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap'
     LoadingBarRouterModule,
     LoadingBarHttpClientModule,
     NgbPaginationModule,
-    NgbAlertModule
+    NgbAlertModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
+    ReactiveFormsModule
   ],
   exports: [
     PageTopComponent,
@@ -44,8 +52,7 @@ import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap'
     BreadcrumbComponent,
     LoadingBarComponent,
     LoopNumberPipe,
-    NgbPaginationModule,
-    NgbAlertModule
+    ParseCurrencyPipe
   ]
 })
 export class SharedModule { }

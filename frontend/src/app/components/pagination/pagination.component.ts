@@ -9,7 +9,7 @@ export class PaginationComponent implements OnInit {
 
   page = 1;
   totalRecord: number;
-  limit = 6;
+  limit = 25;
   offset = 0;
 
   @Output() changePage: EventEmitter<any> = new EventEmitter<any>();
@@ -27,7 +27,7 @@ export class PaginationComponent implements OnInit {
 
   PageChanged(pageNumber) {
     const l = this.limit;
-    const o = this.offset;
+    const o = (pageNumber - 1) * this.limit;
     this.changePage.emit({ pageNumber, limit: l, offset: o });
   }
 }

@@ -41,8 +41,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   changeCurPage(e) {
-    // const { pageNumber, limit, offset } = e;
-    const pageNumber = e;
+    const { pageNumber, limit, offset } = e;
+    // const pageNumber = e;
     const begin = 6 * (pageNumber - 1);
     this.curPage = pageNumber;
     const end = begin + 6;

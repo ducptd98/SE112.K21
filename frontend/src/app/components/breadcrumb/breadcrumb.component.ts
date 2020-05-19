@@ -19,20 +19,22 @@ export class BreadcrumbComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.router.events.pipe(
-      filter((event: Event) => event instanceof NavigationEnd),
-      distinctUntilChanged(),
-    ).subscribe(() => {
-      this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
-    });
+    // this.router.events.pipe(
+    //   filter((event: Event) => event instanceof NavigationEnd),
+    //   distinctUntilChanged(),
+    // ).subscribe(() => {
+    //   this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
+    // });
   }
 
   buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): IBreadCrumb[] {
     let label = route.routeConfig && route.routeConfig.data ? route.routeConfig.data.breadcrumb : '';
     let path = route.routeConfig && route.routeConfig.data ? route.routeConfig.path : '';
+    console.log('BreadcrumbComponent -> route.routeConfig', route.routeConfig);
 
     // If the route is dynamic route such as ':id', remove it
     const lastRoutePart = path.split('/').pop();
+
     const isDynamicRoute = lastRoutePart.startsWith(':');
     if (isDynamicRoute && !!route.snapshot) {
       const paramName = lastRoutePart.split(':')[1];

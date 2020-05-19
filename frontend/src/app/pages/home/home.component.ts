@@ -1,6 +1,7 @@
 import { Subscription } from 'rxjs';
 import { ProductService } from './../../../api/services/product.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +9,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+
+  @ViewChild(ToastContainerDirective, { static: true }) toastContainer: ToastContainerDirective;
 
   bindDescriptionsToPagetop = 'Tìm kiếm nhà đất, thông tin bất động sản ở từng khu vực trọng điểm';
   mySlideOptions = { items: 1, dots: true, nav: false, autoplay: true, loop: true };
@@ -45,13 +48,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   limit = 6;
   offset = 0;
 
-  constructor(private prodService: ProductService) { }
+  constructor(private prodService: ProductService,
+              private toastrService: ToastrService) { }
   ngOnDestroy(): void {
     this.subscription.forEach(item => item.unsubscribe());
   }
 
   ngOnInit() {
     // this.getProductByCategory(this.cateId, this.limit, this.offset);
+    this.toastrService.overlayContainer = this.toastContainer;
   }
   getProducts(limit, offset) {
     const prodSub = this.prodService.getAll(limit, offset).subscribe(
@@ -88,5 +93,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     // page 1: off = (1-1)*5 = 0
     this.getProducts(this.limit, this.offset);
   }
-
+  click() {
+    this.toastrService.success('in div');
+  }
 }

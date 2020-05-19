@@ -10,7 +10,7 @@
                 nav: false,
                 autoplay: true,
                 loop: true
-              }" [carouselClasses]="['clients-slider']">
+                }" [carouselClasses]="['clients-slider']">
                 <div *ngFor="let item of data">
                     <div class="sl-item set-bg" [ngStyle]="{'background-image': 'url('+item.img+')'}">
                         <div class="sale-notic">{{item.caption}}</div>

@@ -59,7 +59,6 @@ i {
     background: #30caa0;
     color: #fff;
     border-radius: 3px;
-    margin-bottom: 70px;
   }
   .sl-sp-title {
     display: block;
@@ -120,6 +119,7 @@ i {
       border: 1px solid #e1e1e1;
       border-bottom: 0;
       i {
+        color: #30caa0;
         -webkit-transform: rotate(0deg);
         -ms-transform: rotate(0deg);
         transform: rotate(0deg);

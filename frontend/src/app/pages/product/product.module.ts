@@ -8,10 +8,11 @@ import { CommonModule } from '@angular/common';
 import { ProductRoutingModule } from './product-routing.module';
 import { ProductComponent } from './product.component';
 import HttpConfigInterceptor from 'src/app/utilities/httpconfig.interceptor';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 
 @NgModule({
-  declarations: [ProductComponent],
+  declarations: [ProductComponent, ProductDetailComponent],
   imports: [
     CommonModule,
     ProductRoutingModule,

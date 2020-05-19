@@ -28,7 +28,8 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const routeSub = this.route.params.subscribe(routerParam => {
-      this.getProductByCategory(routerParam.cateId, 6, 0);
+      this.cateId = routerParam.cateId;
+      this.getProductByCategory(routerParam.cateId, 25, 0);
     });
     this.subscription.push(routeSub);
   }
@@ -61,17 +62,22 @@ export class ProductComponent implements OnInit, OnDestroy {
           const desc = JSON.parse(item.desc);
           return Object.assign(item, { images, desc });
         });
+        console.log('ProductComponent -> getProductByCategory -> this.products', this.products);
       },
       err => console.log('@@@ getProductByCategory', err));
     this.subscription.push(prodSub);
   }
-  changeCurPage(page) {
-    this.offset = (page - 1) * this.limit;
+  changeCurPage(e) {
     // page 1: off = (1-1)*5 = 0
     // page 2: off = (2-1)*5 = 5
     // page 3: off = (3-1)*5 = 10
     // page 1: off = (1-1)*5 = 0
-    this.getProducts(this.limit, this.offset);
+    const { pageNumber, limit, offset } = e;
+    // const pageNumber = e;
+    this.offset = (pageNumber - 1) * this.limit;
+    console.log('ProductComponent -> changeCurPage -> this.offset', this.offset);
+    this.curPage = pageNumber;
+    this.getProductByCategory(this.cateId, this.limit, this.offset);
   }
 
 }

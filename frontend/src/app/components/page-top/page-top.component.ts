@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -12,6 +12,8 @@ export class PageTopComponent implements OnInit {
   @Input() imgPageTop: string;
   @Input() descriptions: string;
   @Input() isHomePage: boolean;
+
+  @Output() viewDetail = new EventEmitter<any>();
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
@@ -19,5 +21,7 @@ export class PageTopComponent implements OnInit {
       this.header = this.route.snapshot.data.breadcrumb;
     }
   }
-
+  onClick() {
+    this.viewDetail.emit(true);
+  }
 }
