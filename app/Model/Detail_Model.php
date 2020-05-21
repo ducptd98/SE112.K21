@@ -8,9 +8,9 @@ class Detail_Model extends Model
 {
     protected $table = 'tbl_Detail';
     
-    public static function getPageDetail($where =  null, $limit =  10, $offset = 0){
+    public static function getPageDetail($where =  null, $limit =  10, $offset = 0, $order= 'desc'){
         if (!empty($where)) {
-            return Detail_Model::where($where)->limit($limit)->offset($offset)->get();
+            return Detail_Model::where($where)->limit($limit)->offset($offset)->orderBy('price', $order)->get();
         } return Detail_Model::get();
     }
     
