@@ -20,7 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => 'cors'], function () {
 
     //Categories
-    $this->resource('categories', 'Admin\CategoryController');
+    $this->resource('/categories', 'Admin\CategoryController');
+    //Categories
+    $this->get('/category/search', 'Admin\CategoryController@search');
 
     //Products
     $this->resource('/product', 'Admin\ProductController');
