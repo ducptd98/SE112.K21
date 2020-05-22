@@ -43,7 +43,7 @@ class ProductController extends Controller
 
     public function searchName(Request $request){
         $name  = request()->get('name');
-        $data = Detail_Model::where('name', 'like', '%' . $name . '%')->get();
+        $data = Detail_Model::where('name', 'like', '%' . $name . '%')->paginate(10);
         $total_record = Detail_Model::where('name', 'like', '%' . $name . '%')->count();
         $return = [
             'total_record' => $total_record,
@@ -53,7 +53,7 @@ class ProductController extends Controller
     }
     public function searchLocation(Request $request){
         $name  = request()->get('location');
-        $data = Detail_Model::where('address', 'like', '%' . $name . '%')->get();
+        $data = Detail_Model::where('address', 'like', '%' . $name . '%')->paginate(10);
         $total_record = Detail_Model::where('address', 'like', '%' . $name . '%')->count();
         $return = [
             'total_record' => $total_record,
