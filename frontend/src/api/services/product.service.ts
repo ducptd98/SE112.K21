@@ -21,17 +21,31 @@ export class ProductService {
       headers
     });
   }
-  getProduct(productId): Observable<IProduct> {
+  getProduct(productId): Observable<any> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    return this.http.get<IProduct>(`${this.basePath}/api/product/${productId}`, {
+    return this.http.get<any>(`${this.basePath}/api/product/${productId}`, {
       headers
     });
   }
   getProductByCategory(categoryId, limit, offset) {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    return this.http.get<Array<IProduct>>(`${this.basePath}/api/product/${categoryId}/${limit}/${offset}`, {
+    return this.http.get<any>(`${this.basePath}/api/product/${categoryId}/${limit}/${offset}`, {
+      headers
+    });
+  }
+  searchByName(name, page) {
+    let headers = this.defaultHeaders;
+    headers = headers.set('Content-Type', 'application/json');
+    return this.http.get<any>(`${this.basePath}/api/products/search?name=${name}&page=${page}`, {
+      headers
+    });
+  }
+  getProductByLocation(location) {
+    let headers = this.defaultHeaders;
+    headers = headers.set('Content-Type', 'application/json');
+    return this.http.get<any>(`${this.basePath}/api/location/search?location=${location}`, {
       headers
     });
   }

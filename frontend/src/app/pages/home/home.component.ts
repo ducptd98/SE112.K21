@@ -43,9 +43,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   products = [];
   subscription: Subscription[] = [];
-  cateId = '7c913ae0c059165bc22efb1d0aad70a9';
+  cateId = '552d7834298d11583518cd80fa5bd049';
 
-  limit = 6;
+  limit = 25;
   offset = 0;
 
   constructor(private prodService: ProductService,
@@ -55,43 +55,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.getProductByCategory(this.cateId, this.limit, this.offset);
+    this.getProductByCategory(this.cateId, this.limit, this.offset);
     this.toastrService.overlayContainer = this.toastContainer;
-  }
-  getProducts(limit, offset) {
-    const prodSub = this.prodService.getAll(limit, offset).subscribe(
-      data => {
-        this.products = data;
-      },
-      err => console.log('@@@ getProducts', err));
-    this.subscription.push(prodSub);
-  }
-  getById(prodId: string) {
-    const prodSub = this.prodService.getProduct(prodId).subscribe(
-      data => {
-        console.log('@@@ prod by Id', data);
-
-
-      },
-      err => console.log('@@@ getById', err));
-    this.subscription.push(prodSub);
   }
 
   getProductByCategory(cateId: string, limit: number, offset: number) {
     const prodSub = this.prodService.getProductByCategory(cateId, limit, offset).subscribe(
-      data => {
-        // console.log('@@@ prod by cateId', data);
+      res => {
+        const data = JSON.parse(res.data);
+        this.products = data.map(item => {
+          const images = JSON.parse(item.images);
+          const desc = JSON.parse(item.desc);
+          return Object.assign(item, { images, desc });
+        });
       },
       err => console.log('@@@ getProductByCategory', err));
     this.subscription.push(prodSub);
-  }
-  changeCurPage(page: number) {
-    this.offset = (page - 1) * this.limit;
-    // page 1: off = (1-1)*5 = 0
-    // page 2: off = (2-1)*5 = 5
-    // page 3: off = (3-1)*5 = 10
-    // page 1: off = (1-1)*5 = 0
-    this.getProducts(this.limit, this.offset);
   }
   click() {
     this.toastrService.success('in div');

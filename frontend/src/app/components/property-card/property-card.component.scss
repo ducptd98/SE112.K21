@@ -76,3 +76,10 @@
 .rent-notic {
 	background: #eca643;
 }
+.name{
+	cursor: pointer;
+	color: white;
+	&:hover {
+		color: #30caa0;
+	}
+}

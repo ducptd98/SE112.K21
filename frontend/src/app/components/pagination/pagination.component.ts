@@ -13,14 +13,14 @@ export class PaginationComponent implements OnInit {
   offset = 0;
 
   @Output() changePage: EventEmitter<any> = new EventEmitter<any>();
-  @Input() data: Array<any>;
+  @Input() length: number;
   @Input() curPage: number;
   constructor() {
 
   }
 
   ngOnInit() {
-    this.totalRecord = this.data.length;
+    this.totalRecord = this.length;
     this.page = Math.ceil(this.totalRecord / this.limit);
 
   }

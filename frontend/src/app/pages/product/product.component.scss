@@ -1,13 +1,13 @@
 .image-parent {
-  width: 270px;
-  height: 200px;
+  width: 175px;
+  height: 116px;
 }
-.product-name{
+.product-name {
   color: black;
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 10px;
-  &:hover{
+  &:hover {
     color: #30caa0;
   }
 }
@@ -16,4 +16,24 @@ p {
 }
 .value {
   font-weight: bold;
+}
+.loading-container {
+  position: relative;
+  height: 70px;
+  ngx-loading-bar {
+    display: block;
+    #loading-bar-spinner {
+      position: absolute;
+      top: 5px;
+      left: 50%;
+    }
+    #loading-bar {
+      .bar {
+        position: absolute;
+        .peg {
+          display: none;
+        }
+      }
+    }
+  }
 }

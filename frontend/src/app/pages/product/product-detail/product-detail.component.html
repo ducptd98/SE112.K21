@@ -1,101 +1,54 @@
 <app-page-top [isHomePage]="false" imgPageTop="../../../assets/page-top-bg.png"></app-page-top>
 <div class="container">
     <app-breadcrumb></app-breadcrumb>
-
-    <div class="d-flex">
+    <div class="row justify-content-center loading-container" *ngIf="loading">
+        <div class="spinner-border text-success mt-2" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div class="d-flex" *ngIf="!loading">
         <div class="w-60">
             <owl-carousel [options]="{
                 items: 1,
                 dots: true,
                 nav: false,
-                autoplay: true,
-                loop: true
+                autoplay: true
                 }" [carouselClasses]="['clients-slider']">
-                <div *ngFor="let item of data">
-                    <div class="sl-item set-bg" [ngStyle]="{'background-image': 'url('+item.img+')'}">
-                        <div class="sale-notic">{{item.caption}}</div>
+                <div *ngFor="let item of product.images">
+                    <div class="sl-item set-bg" [ngStyle]="{'background-image': 'url('+item+')'}">
+                        <div class="sale-notic">SALE</div>
                     </div>
                 </div>
             </owl-carousel>
 
-            <owl-carousel [options]="options" [carouselClasses]="['clients-slider','single-list-slider']">
-                <div *ngFor="let item of data" style="height: 80px; margin-right: 10px;">
-                    <img src="{{item.img}}" alt="" style="width: 100%;height: 100%;">
+            <!-- <owl-carousel [options]="options" [carouselClasses]="['clients-slider','single-list-slider']">
+                <div *ngFor="let item of product.images" style="height: 80px; margin-right: 10px;">
+                    <img src="{{item}}" alt="" style="width: 100%;height: 100%;">
                 </div>
-            </owl-carousel>
+            </owl-carousel> -->
 
             <div class="detail-content">
                 <div class="row">
-                    <div class="col-xs-8 col-md-8 col-lg-8 sl-title">
-                        <h2>305 North Palm Drive</h2>
-                        <p><i class="fas fa-map-marker pr-1" style="color: #30caa0;"></i>Beverly Hills, CA 90210</p>
+                    <div class="col-xs-9 col-md-9 col-lg-9 sl-title">
+                        <h2>{{product.name}}</h2>
+                        <p><i class="fas fa-map-marker pr-1" style="color: #30caa0;"></i>{{product.addressDetail}}</p>
                     </div>
-                    <div class="col-xl-4 mb-3">
-                        <a href="#" class="price-btn">$4,500,000</a>
-                        <div style="padding: 9px">$1,200/sq ft</div>
+                    <div class="col-xl-3 mb-3">
+                        <a href="#" class="price-btn">{{product.price | parseCurrency}}</a>
+                        <div style="padding: 9px">Số điện thoại: <strong>{{product.contact}}</strong></div>
                     </div>
                 </div>
                 <h3 class="sl-sp-title">Thông tin chi tiết </h3>
                 <div class="row property-details-list">
                     <div class="col-md-4 col-sm-6">
-                        <p><i class="fas fa-th-large"></i> 100 m2</p>
+                        <p><i class="fas fa-th-large"></i> {{product.area}}</p>
+                        <p><i class="fas fa-th-large"></i> <a [href]="product.url"> More</a> </p>
                     </div>
                 </div>
                 <h3 class="sl-sp-title">Mô tả</h3>
                 <div class="description">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus egestas fermentum ornareste.
-                        Donec index lorem. Vestibulum aliquet odio, eget tempor libero. Cras congue cursus tincidunt.
-                        Nullam venenatis dui id orci egestas tincidunt id elit. Nullam ut vuputate justo. Integer lacnia
-                        pharetra pretium. Casan ante ipsum primis in faucibus orci luctus et ultrice.</p>
+                    <p *ngFor="let item of product.desc">{{item}}</p>
                 </div>
-                <!-- <h3 class="sl-sp-title bd-no">Floorplans</h3>
-                <div id="accordion" class="plan-accordion">
-                    <div class="panel">
-                        <div class="panel-header" id="headingOne">
-                            <button class="panel-link active" data-toggle="collapse" data-target="#collapse1"
-                                aria-expanded="true" aria-controls="collapse1">First Floor: <span>660 sq ft</span> <i
-                                    class="fas fa-angle-down"></i></button>
-                        </div>
-                        <div id="collapse1" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                            <div class="panel-body">
-                                <img src="../../../../assets/plan-sketch.jpg" style="width: 100%;height: 100%;" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel">
-                        <div class="panel-header" id="headingTwo">
-                            <button class="panel-link active" data-toggle="collapse" data-target="#collapse2"
-                                aria-expanded="true" aria-controls="collapse2">Second Floor:<span>610 sq ft.</span> <i
-                                    class="fas fa-angle-down"></i>
-                            </button>
-                        </div>
-                        <div id="collapse2" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
-                            <div class="panel-body">
-                                <img src="../../../../assets/plan-sketch.jpg" style="width: 100%;height: 100%;" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel">
-                        <div class="panel-header" id="headingThree">
-                            <button class="panel-link active" data-toggle="collapse" data-target="#collapse3"
-                                aria-expanded="true" aria-controls="collapse3">Third Floor :<span>580 sq ft</span> <i
-                                    class="fas fa-angle-down"></i>
-                            </button>
-                        </div>
-                        <div id="collapse3" class="collapse show" aria-labelledby="headingThree"
-                            data-parent="#accordion">
-                            <div class="panel-body">
-                                <img src="../../../../assets/plan-sketch.jpg" style="width: 100%;height: 100%;" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="sl-sp-title bd-no">Video</h3>
-                <div class="perview-video">
-                    <img src="../../../../assets/video.jpg" alt="" style="width: 100%;height: 100%;">
-                    <a href="https://www.youtube.com/watch?v=v13nSVp6m5I" target="blank" class="video-link"><img
-                            src="../../../../assets/video-btn.png" alt=""></a>
-                </div> -->
             </div>
         </div>
         <div class="w-40 pl-5">
@@ -133,39 +86,30 @@
                                 <h5 class="text-truncated"> Bạn có thắc mắc gì ko?</h5>
                             </div>
                             <div class="row">
-                                <form class="form-group w-100 my-auto">
-                                    <div class="container">
-                                        <div class="row p-2">
-                                            <input class="form-control" type="text" placeholder="Your name">
-                                        </div>
-                                        <div class="row p-2">
-                                            <input class="form-control" type="text" placeholder="Your email">
-                                        </div>
-                                        <div class="row p-2">
-                                            <textarea class="form-control" placeholder="Your question"></textarea>
-                                        </div>
-                                        <div class="row p-2">
-                                            <button class="btn btn-send">SEND</button>
-                                        </div>
+                                <!-- <form class="form-group w-100 my-auto"> -->
+                                <div class="container">
+                                    <div class="row p-2">
+                                        <input class="form-control" type="text" placeholder="Your name">
                                     </div>
-                                </form>
+                                    <div class="row p-2">
+                                        <input class="form-control" type="text" placeholder="Your email">
+                                    </div>
+                                    <div class="row p-2">
+                                        <textarea class="form-control" placeholder="Your question"></textarea>
+                                    </div>
+                                    <div class="row p-2">
+                                        <button class="btn btn-send">SEND</button>
+                                    </div>
+                                </div>
+                                <!-- </form> -->
                             </div>
                         </div>
                     </div>
                 </div>
                 <h3>Related Property</h3>
                 <div class="row mt-4">
-                    <div class="w-100">
-                        <app-property-card srcImage="1.jpg"></app-property-card>
-                    </div>
-                    <div class="w-100">
-                        <app-property-card srcImage="1.jpg"></app-property-card>
-                    </div>
-                    <div class="w-100">
-                        <app-property-card srcImage="1.jpg"></app-property-card>
-                    </div>
-                    <div class="w-100">
-                        <app-property-card srcImage="1.jpg"></app-property-card>
+                    <div class="w-100" *ngFor="let item of productRelated">
+                        <app-property-card [data]="item"></app-property-card>
                     </div>
                 </div>
             </div>

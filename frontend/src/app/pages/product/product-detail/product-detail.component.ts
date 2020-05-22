@@ -1,3 +1,4 @@
+import { ProductService } from './../../../../api/services/product.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -49,16 +50,58 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     }
   };
   subscription: Subscription[] = [];
+  product: any;
+  productRelated = [];
+  loading = true;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private productSer: ProductService) { }
   ngOnDestroy(): void {
     this.subscription.forEach(item => item.unsubscribe());
   }
 
   ngOnInit() {
-    // const routeSub = this.route.params.subscribe(routerParam => {
-    // });
-    // this.subscription.push(routeSub);
+    const routeSub = this.route.params.subscribe(routerParam => {
+      const productId = routerParam.productId;
+      const category = routerParam.category;
+      this.getProduct(productId);
+    });
+    this.subscription.push(routeSub);
   }
 
+  getProduct(productId) {
+    const prodSub = this.productSer.getProduct(productId).subscribe(
+      res => {
+        const data = JSON.parse(res.data);
+        console.log('product', data[0]);
+        const productRes = data[0];
+        const images = JSON.parse(productRes.images);
+        const desc = JSON.parse(productRes.desc);
+        const addressDetail = productRes.address.split('tại')[1];
+        const product = Object.assign(productRes, { images, desc, addressDetail });
+        this.product = product;
+        console.log('ProductDetailComponent -> getProduct -> this.product', this.product);
+        this.loading = false;
+      },
+      err => console.log('@@@ getProductByCategory', err),
+      () => this.getProductRelated(this.product.addressDetail.split('-')[1]));
+    this.subscription.push(prodSub);
+  }
+  getProductRelated(location) {
+    const prodSub = this.productSer.getProductByLocation(location).subscribe(
+      res => {
+        const data = JSON.parse(res.data);
+        const rnd = this.getRndInteger(0, data.length);
+        const products = data.slice(rnd, rnd + 3).map(item => {
+          const images = JSON.parse(item.images);
+          const desc = JSON.parse(item.desc);
+          return Object.assign(item, { images, desc });
+        });
+        this.productRelated = products;
+      },
+      err => console.log('@@@ getProductRelated', err));
+    this.subscription.push(prodSub);
+  }
+  getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
 }

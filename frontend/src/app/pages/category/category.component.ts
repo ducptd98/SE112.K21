@@ -12,7 +12,7 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
 export class CategoryComponent implements OnInit, OnDestroy {
   lstCate = new Array<ICategory>();
   filterCase = new Array<ICategory>();
-  loading = false;
+  loading = true;
   curPage = 1;
 
   subscription: Subscription[] = [];
@@ -24,6 +24,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.loadData();
   }
   loadData() {

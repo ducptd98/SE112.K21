@@ -9,19 +9,19 @@ export class ParseCurrencyPipe implements PipeTransform {
     const temp = value.split(' ');
     let curr = '';
     let thoathuan = false;
-    switch (temp[2]) {
+    switch (temp[1]) {
       case 't':
-        curr = 'tỷ';
+        curr = 'Tỷ';
         break;
       case 'triu':
-        curr = 'triệu';
+        curr = 'Triệu';
         break;
       case 'thun':
-        curr = 'thỏa thuận';
+        curr = 'Thỏa thuận';
         thoathuan = true;
         break;
       default:
-        curr = 'triệu/m';
+        curr = 'Triệu/m';
         break;
     }
     return !thoathuan ? `${temp[0]} ${curr}` : curr;

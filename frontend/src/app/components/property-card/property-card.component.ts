@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PropertyCardComponent implements OnInit {
 
-  @Input() srcImage: string;
+  @Input() data: any;
   // nên truyền Object
 
   constructor() { }

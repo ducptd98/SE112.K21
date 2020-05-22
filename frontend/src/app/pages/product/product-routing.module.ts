@@ -9,11 +9,11 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: ':id',
+        path: ':category',
         component: ProductComponent
       },
       {
-        path: ':id/detail/:productId',
+        path: ':category/detail/:productId',
         component: ProductDetailComponent,
         data: { breadcrumb: 'Chi tiết' },
       }

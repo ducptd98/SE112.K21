@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductService } from './../../../api/services/product.service';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -17,7 +18,8 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     CommonModule,
     ProductRoutingModule,
     OwlModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ],
   providers: [
     ProductService,

@@ -1,3 +1,4 @@
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ProductService } from './../../../api/services/product.service';
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
@@ -10,38 +11,43 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit, OnDestroy {
-  loading = false;
+  loading = true;
   subscription: Subscription[] = [];
   limit = 6;
   offset = 0;
   products = [];
+  isSearch = false;
+  filterProducts = [];
   curPage = 1;
   cateId = '';
+  category = '';
+  total = 0;
 
-  constructor(private prodService: ProductService, private route: ActivatedRoute) {
+  searchForm: FormGroup;
 
-
+  constructor(private prodService: ProductService, private route: ActivatedRoute, private fb: FormBuilder) {
+    this.searchForm = this.fb.group({
+      searchTerm: ['']
+    });
   }
   ngOnDestroy(): void {
     this.subscription.forEach(item => item.unsubscribe());
+    this.loading = false;
   }
 
   ngOnInit() {
+    this.loading = true;
     const routeSub = this.route.params.subscribe(routerParam => {
+      this.category = routerParam.category;
       this.cateId = routerParam.cateId;
       this.getProductByCategory(routerParam.cateId, 25, 0);
     });
     this.subscription.push(routeSub);
   }
-
-  getProducts(limit, offset) {
-    const prodSub = this.prodService.getAll(limit, offset).subscribe(
-      data => {
-        this.products = data;
-      },
-      err => console.log('@@@ getProducts', err));
-    this.subscription.push(prodSub);
+  get f() {
+    return this.searchForm.controls;
   }
+
   getById(prodId: string) {
     const prodSub = this.prodService.getProduct(prodId).subscribe(
       data => {
@@ -52,19 +58,44 @@ export class ProductComponent implements OnInit, OnDestroy {
       err => console.log('@@@ getById', err));
     this.subscription.push(prodSub);
   }
+  searchProductByName(name, page) {
+    this.loading = true;
+    const prodSub = this.prodService.searchByName(name, page).subscribe(
+      res => {
+        const data = JSON.parse(res.data);
+        const total = +res.total_record;
+        this.products = data.data.map(item => {
+          const images = JSON.parse(item.images);
+          const desc = JSON.parse(item.desc);
+          return Object.assign(item, { images, desc });
+        });
+        this.total = total;
+
+      },
+      err => console.log('@@@ searchProductByName', err),
+      () => {
+        this.filterProducts = this.products;
+        this.loading = false;
+      });
+    this.subscription.push(prodSub);
+  }
 
   getProductByCategory(cateId: string, limit: number, offset: number) {
+    this.loading = true;
     const prodSub = this.prodService.getProductByCategory(cateId, limit, offset).subscribe(
-      data => {
-        // console.log('@@@ prod by cateId', data);
+      res => {
+        const data = JSON.parse(res.data);
+        const total = +res.total_record;
         this.products = data.map(item => {
           const images = JSON.parse(item.images);
           const desc = JSON.parse(item.desc);
           return Object.assign(item, { images, desc });
         });
+        this.total = total;
         console.log('ProductComponent -> getProductByCategory -> this.products', this.products);
       },
-      err => console.log('@@@ getProductByCategory', err));
+      err => console.log('@@@ getProductByCategory', err),
+      () => this.loading = false);
     this.subscription.push(prodSub);
   }
   changeCurPage(e) {
@@ -75,9 +106,25 @@ export class ProductComponent implements OnInit, OnDestroy {
     const { pageNumber, limit, offset } = e;
     // const pageNumber = e;
     this.offset = (pageNumber - 1) * this.limit;
-    console.log('ProductComponent -> changeCurPage -> this.offset', this.offset);
     this.curPage = pageNumber;
-    this.getProductByCategory(this.cateId, this.limit, this.offset);
+    if (this.f.searchTerm.value === '') {
+      this.getProductByCategory(this.cateId, this.limit, this.offset);
+    } else {
+      // const begin = this.limit * (pageNumber - 1);
+      // const end = begin + 6;
+      // this.filterProducts = this.products.slice(begin, end);
+      this.searchProductByName(this.f.searchTerm.value, this.curPage);
+    }
+    // this.getProductByCategory(this.cateId, this.limit, this.offset);
   }
-
+  search({ value, valid }) {
+    console.log('ProductComponent -> search -> value.searchTerm', value.searchTerm);
+    if (this.f.searchTerm.value !== '') {
+      this.isSearch = true;
+      this.searchProductByName(value.searchTerm, this.curPage);
+    } else {
+      this.isSearch = false;
+      this.getProductByCategory(this.cateId, this.limit, this.offset);
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import { LoadingComponent } from './../components/loading/loading.component';
 import { ParseCurrencyPipe } from './../utilities/parse-currency.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoopNumberPipe } from '../utilities/loop-number.pipe';
@@ -26,7 +27,8 @@ import { ToastrModule } from 'ngx-toastr';
     PropertyCardComponent,
     BreadcrumbComponent,
     LoopNumberPipe,
-    ParseCurrencyPipe
+    ParseCurrencyPipe,
+    LoadingComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +43,7 @@ import { ToastrModule } from 'ngx-toastr';
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
-    ReactiveFormsModule
+
   ],
   exports: [
     PageTopComponent,
@@ -52,7 +54,8 @@ import { ToastrModule } from 'ngx-toastr';
     BreadcrumbComponent,
     LoadingBarComponent,
     LoopNumberPipe,
-    ParseCurrencyPipe
+    ParseCurrencyPipe,
+    LoadingComponent
   ]
 })
 export class SharedModule { }
