@@ -37,12 +37,16 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
-        data : {breadcrumb: 'Đăng nhập'}
+        data: { breadcrumb: 'Đăng nhập' }
       },
       {
         path: 'register',
         component: RegisterComponent,
-        data : {breadcrumb: 'Đăng kí'}
+        data: { breadcrumb: 'Đăng kí' }
+      },
+      {
+        path: '**',
+        redirectTo: 'home',
       }
     ]
   }

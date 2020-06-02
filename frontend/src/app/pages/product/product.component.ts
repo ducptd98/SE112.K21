@@ -16,7 +16,6 @@ export class ProductComponent implements OnInit, OnDestroy {
   limit = 6;
   offset = 0;
   products = [];
-  isSearch = false;
   filterProducts = [];
   curPage = 1;
   cateId = '';
@@ -92,7 +91,6 @@ export class ProductComponent implements OnInit, OnDestroy {
           return Object.assign(item, { images, desc });
         });
         this.total = total;
-        console.log('ProductComponent -> getProductByCategory -> this.products', this.products);
       },
       err => console.log('@@@ getProductByCategory', err),
       () => this.loading = false);
@@ -118,12 +116,9 @@ export class ProductComponent implements OnInit, OnDestroy {
     // this.getProductByCategory(this.cateId, this.limit, this.offset);
   }
   search({ value, valid }) {
-    console.log('ProductComponent -> search -> value.searchTerm', value.searchTerm);
     if (this.f.searchTerm.value !== '') {
-      this.isSearch = true;
       this.searchProductByName(value.searchTerm, this.curPage);
     } else {
-      this.isSearch = false;
       this.getProductByCategory(this.cateId, this.limit, this.offset);
     }
   }

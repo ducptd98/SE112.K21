@@ -77,7 +77,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         const images = JSON.parse(productRes.images);
         const desc = JSON.parse(productRes.desc);
         const addressDetail = productRes.address.split('tại')[1];
-        const product = Object.assign(productRes, { images, desc, addressDetail });
+        const url = 'https://www.batdongsan.com.vn/' + productRes.url.split('/')[3];
+        const product = Object.assign(productRes, { images, desc, addressDetail, url });
         this.product = product;
         console.log('ProductDetailComponent -> getProduct -> this.product', this.product);
         this.loading = false;
@@ -89,7 +90,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   getProductRelated(location) {
     const prodSub = this.productSer.getProductByLocation(location).subscribe(
       res => {
-        const data = JSON.parse(res.data);
+        const response = JSON.parse(res.data);
+        const data = response.data;
+        console.log('getProductRelated', response);
+
         const rnd = this.getRndInteger(0, data.length);
         const products = data.slice(rnd, rnd + 3).map(item => {
           const images = JSON.parse(item.images);

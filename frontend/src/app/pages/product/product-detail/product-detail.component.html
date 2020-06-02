@@ -47,8 +47,12 @@
                 </div>
                 <h3 class="sl-sp-title">Mô tả</h3>
                 <div class="description">
-                    <p *ngFor="let item of product.desc">{{item}}</p>
+                    <template *ngFor="let item of product.desc">
+                        <p *ngFor="let it of item.split('.')">{{it}}</p>
+                    </template>
                 </div>
+                <fb-share [href]="product.url" [layout]="'button'" [size]="'large'"></fb-share>
+
             </div>
         </div>
         <div class="w-40 pl-5">

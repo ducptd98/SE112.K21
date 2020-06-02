@@ -1,3 +1,4 @@
+import { CategoryService } from './../../../api/services/category.service';
 import { Subscription } from 'rxjs';
 import { ProductService } from './../../../api/services/product.service';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
@@ -42,6 +43,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ];
 
   products = [];
+  category = [];
   subscription: Subscription[] = [];
   cateId = '552d7834298d11583518cd80fa5bd049';
 
@@ -49,13 +51,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   offset = 0;
 
   constructor(private prodService: ProductService,
+              private cateService: CategoryService,
               private toastrService: ToastrService) { }
   ngOnDestroy(): void {
     this.subscription.forEach(item => item.unsubscribe());
   }
 
   ngOnInit() {
+    console.log('HomeComponent -> ngOnInit -> ngOnInit');
     this.getProductByCategory(this.cateId, this.limit, this.offset);
+    this.getCategory();
     this.toastrService.overlayContainer = this.toastContainer;
   }
 
@@ -71,6 +76,16 @@ export class HomeComponent implements OnInit, OnDestroy {
       },
       err => console.log('@@@ getProductByCategory', err));
     this.subscription.push(prodSub);
+  }
+  getCategory() {
+    const cateSubscription = this.cateService.getAllNotPaging().subscribe(
+      data => {
+        this.category = data;
+        console.log('HomeComponent -> getCategory -> this.category', this.category);
+      },
+      err => console.error('@@@ getAllNotPaging err ', err),
+    );
+    this.subscription.push(cateSubscription);
   }
   click() {
     this.toastrService.success('in div');
