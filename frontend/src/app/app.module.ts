@@ -1,3 +1,4 @@
+import { AlertProvider } from './utilities/alert.provider';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -46,7 +47,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule
   ],
   // providers: [{ provide: NZ_I18N, useValue: en_US }],
-  providers: [],
+  providers: [AlertProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

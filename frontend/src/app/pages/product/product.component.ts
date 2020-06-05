@@ -2,7 +2,7 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ProductService } from './../../../api/services/product.service';
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
@@ -22,9 +22,14 @@ export class ProductComponent implements OnInit, OnDestroy {
   category = '';
   total = 0;
 
+  filter;
+
   searchForm: FormGroup;
 
-  constructor(private prodService: ProductService, private route: ActivatedRoute, private fb: FormBuilder) {
+  constructor(private prodService: ProductService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private fb: FormBuilder) {
     this.searchForm = this.fb.group({
       searchTerm: ['']
     });
@@ -37,9 +42,15 @@ export class ProductComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loading = true;
     const routeSub = this.route.params.subscribe(routerParam => {
-      this.category = routerParam.category;
+
       this.cateId = routerParam.cateId;
-      this.getProductByCategory(routerParam.cateId, 25, 0);
+      if (!routerParam.cateId) {
+        this.filter = routerParam.name;
+        this.searchProductByName(this.filter, 1);
+      } else {
+        this.category = routerParam.category;
+        this.getProductByCategory(routerParam.cateId, 25, 0);
+      }
     });
     this.subscription.push(routeSub);
   }
@@ -73,7 +84,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       },
       err => console.log('@@@ searchProductByName', err),
       () => {
-        this.filterProducts = this.products;
+        this.router.navigate([`/product/search`, { name }]);
         this.loading = false;
       });
     this.subscription.push(prodSub);

@@ -1,3 +1,6 @@
+import { PageTopComponent } from './../../components/page-top/page-top.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { LocationService } from './../../../api/services/location.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CategoryService } from './../../../api/services/category.service';
 import { ProductService } from './../../../api/services/product.service';
@@ -27,11 +30,14 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     OwlModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     ProductService,
     CategoryService,
+    LocationService,
     { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
   ]
 })

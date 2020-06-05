@@ -1,6 +1,8 @@
+import { FilterSectionComponent } from 'src/app/components/filter-section/filter-section.component';
+import { AlertProvider } from './../utilities/alert.provider';
 import { LoadingComponent } from './../components/loading/loading.component';
 import { ParseCurrencyPipe } from './../utilities/parse-currency.pipe';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoopNumberPipe } from '../utilities/loop-number.pipe';
 import { BreadcrumbComponent } from 'src/app/components/breadcrumb/breadcrumb.component';
 import { NgModule } from '@angular/core';
@@ -21,14 +23,13 @@ import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     PageTopComponent,
-    FeaturedCardComponent,
     PaginationComponent,
     BrandLogoComponent,
     PropertyCardComponent,
     BreadcrumbComponent,
     LoopNumberPipe,
     ParseCurrencyPipe,
-    LoadingComponent
+    LoadingComponent,
   ],
   imports: [
     CommonModule,
@@ -43,11 +44,12 @@ import { ToastrModule } from 'ngx-toastr';
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
+    ReactiveFormsModule,
+    FormsModule
 
   ],
   exports: [
     PageTopComponent,
-    FeaturedCardComponent,
     PaginationComponent,
     BrandLogoComponent,
     PropertyCardComponent,
@@ -55,7 +57,10 @@ import { ToastrModule } from 'ngx-toastr';
     LoadingBarComponent,
     LoopNumberPipe,
     ParseCurrencyPipe,
-    LoadingComponent
-  ]
+    LoadingComponent,
+    // ReactiveFormsModule,
+    // FormsModule
+  ],
+  providers: []
 })
 export class SharedModule { }

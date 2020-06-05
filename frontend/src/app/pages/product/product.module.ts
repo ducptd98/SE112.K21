@@ -1,3 +1,4 @@
+import { PageTopComponent } from './../../components/page-top/page-top.component';
 import { FacebookCustomService } from './../../../api/services/facebook-custom.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -15,7 +16,10 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 
 
 @NgModule({
-  declarations: [ProductComponent, ProductDetailComponent],
+  declarations: [
+    ProductComponent,
+    ProductDetailComponent,
+  ],
   imports: [
     CommonModule,
     ProductRoutingModule,

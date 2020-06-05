@@ -16,7 +16,11 @@ const routes: Routes = [
         path: ':category/detail/:productId',
         component: ProductDetailComponent,
         data: { breadcrumb: 'Chi tiết' },
-      }
+      },
+      {
+        path: 'search',
+        component: ProductComponent
+      },
     ]
   }
 ];

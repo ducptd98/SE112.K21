@@ -1,3 +1,4 @@
+import { LocationService } from './../../../api/services/location.service';
 import { CategoryService } from './../../../api/services/category.service';
 import { Subscription } from 'rxjs';
 import { ProductService } from './../../../api/services/product.service';
@@ -43,7 +44,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   ];
 
   products = [];
+  Allproducts = [];
   category = [];
+  address;
+  district;
   subscription: Subscription[] = [];
   cateId = '552d7834298d11583518cd80fa5bd049';
 
@@ -89,5 +93,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   click() {
     this.toastrService.success('in div');
+  }
+  onAddress(e) {
+    console.log('onAddress', e);
+    this.address = e;
+  }
+  onDistrict(e) {
+    console.log('onDistrict', e);
+    this.district = e;
   }
 }

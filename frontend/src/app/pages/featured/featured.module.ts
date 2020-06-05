@@ -1,3 +1,6 @@
+import { PageTopComponent } from './../../components/page-top/page-top.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FeaturedCardComponent } from 'src/app/components/featured-card/featured-card.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FeaturedComponent } from './featured.component';
@@ -30,13 +33,16 @@ const routes: Routes = [
   declarations: [
     FeaturedComponent,
     // BreadcrumbComponent,
-    FeaturedDetailComponent
+    FeaturedDetailComponent,
+    FeaturedCardComponent,
   ],
   imports: [
     CommonModule,
     OwlModule,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class FeaturedModule { }

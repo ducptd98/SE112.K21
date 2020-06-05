@@ -35,7 +35,7 @@ export class ProductService {
       headers
     });
   }
-  searchByName(name, page) {
+  searchByName(name, page = 1) {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
     return this.http.get<any>(`${this.basePath}/api/products/search?name=${name}&page=${page}`, {
