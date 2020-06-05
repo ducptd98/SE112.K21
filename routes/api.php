@@ -33,4 +33,8 @@ Route::group(['middleware' => 'cors'], function () {
     $this->get('/location/group', 'Admin\ProductController@groupbyLocation');
     $this->get('/location/search', 'Admin\ProductController@searchLocation');
     $this->get('/products/search', 'Admin\ProductController@searchName');
+
+    //get city
+    $this->get('/city', 'Admin\CityController@index');
+    $this->get('/city/{id}', 'Admin\CityController@show');
 });
