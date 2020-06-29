@@ -37,4 +37,11 @@ Route::group(['middleware' => 'cors'], function () {
     //get city
     $this->get('/city', 'Admin\CityController@index');
     $this->get('/city/{id}', 'Admin\CityController@show');
+    //API Post
+    $this->resource('post', 'PostController');
+    $this->post('post_tag','PostController@get_tag');
+    $this->get('post_recently','PostController@get_recently');
+    $this->get('post_favourite','PostController@get_favourite');
+    //API Comment
+    $this->resource('comment', 'CommentController');
 });
