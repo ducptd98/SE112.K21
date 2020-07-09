@@ -61,7 +61,7 @@ class PostController extends Controller
         $data->content = $request->content;
         $data->tag = $request->tag;
         if($data->save()){
-            return response()->json($posts);
+            return response()->json($data);
         }
         return 500;
     }
