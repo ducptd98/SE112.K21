@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
  */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::group(['middleware' => 'cors'], function () {
 
@@ -39,9 +39,16 @@ Route::group(['middleware' => 'cors'], function () {
     $this->get('/city/{id}', 'Admin\CityController@show');
     //API Post
     $this->resource('post', 'PostController');
-    $this->post('post_tag','PostController@get_tag');
+    $this->get('post_tag','PostController@get_tag');
     $this->get('post_recently','PostController@get_recently');
     $this->get('post_favourite','PostController@get_favourite');
     //API Comment
     $this->resource('comment', 'CommentController');
+
+    //Auth
+    $this->post('auth/register', 'UserController@register');
+    $this->post('auth/login', 'UserController@login');
+    $this->group(['middleware' => 'jwt.auth'], function () {
+    $this->get('user-info', 'UserController@getUserInfo');
+    });
 });

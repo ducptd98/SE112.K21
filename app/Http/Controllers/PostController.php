@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Post;
 use App\Model\Comment;
 use Illuminate\Http\Request;
+use Auth;
 
 class PostController extends Controller
 {
@@ -15,6 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
+        return Auth::user()->name;
         $data = new Post();
         $posts = $data->with('comments')->paginate(25);
         return response()->json($posts);
@@ -60,10 +62,15 @@ class PostController extends Controller
         $data->title = $request->title;
         $data->content = $request->content;
         $data->tag = $request->tag;
-        if($data->save()){
-            return response()->json($data);
-        }
-        return 500;
+        return response()->json([
+            'status'=> 200,
+            'message'=> 'Post created successfully',
+            'data'=>$data
+        ]);
+        return response()->json([
+            'status'=> 500,
+            'message'=> 'Post created fail',
+        ]);
     }
 
     /**
@@ -101,10 +108,16 @@ class PostController extends Controller
         $post->content = $request->content;
         $post->tag = $request->tag;
         $post->like = $request->like;
-        if($post->save()){
-            return response()->json($post);
-        }
-        return 500;
+        $post->user_id = $request->user_id;
+        return response()->json([
+            'status'=> 200,
+            'message'=> 'Post updated successfully',
+            'data'=>$post
+        ]);
+        return response()->json([
+            'status'=> 500,
+            'message'=> 'Post updated fail',
+        ]);
     }
 
     /**

@@ -38,10 +38,18 @@ class CommentController extends Controller
         $data = new Comment();
         $data->content = $request->content;
         $data->post_id = $request->post_id;
+        $data->user_id = $request->user_id;
         if($data->save()){
-            return response()->json($data);
+            return response()->json([
+                'status'=> 200,
+                'message'=> 'Comment created successfully',
+                'data'=>$data
+            ]);
         }
-        return 500;
+        return response()->json([
+            'status'=> 500,
+            'message'=> 'Comment created fail',
+        ]);
     }
 
     /**

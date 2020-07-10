@@ -18,7 +18,8 @@ class CreatePostsTable extends Migration
             $table->text('title')->nullable();
             $table->text('content')->nullable();
             $table->text('tag')->nullable();
-            $table->integer('like')->nullable();
+            $table->integer('like')->default('0');
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }
