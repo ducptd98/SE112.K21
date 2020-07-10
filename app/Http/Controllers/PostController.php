@@ -81,7 +81,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-       
+        return response()->json([
+            'status'=> 200,
+            'message'=> 'Comment created successfully',
+            'data'=>$post->comments
+        ]);
     }
 
     /**

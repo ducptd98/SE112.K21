@@ -4,6 +4,7 @@ namespace App;
 
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
+use Avatar;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject
@@ -37,7 +38,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','avatar'
     ];
 
     /**
@@ -48,4 +49,21 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $appends = [
+        'avatar_path'
+    ];
+
+    public function getAvatarPathAttribute()
+    {
+        if (empty($this->attributes['avatar'])) {
+            return Avatar::create($this->attributes['name'])
+                ->setDimension(30, 30)
+                ->setFontSize(10)
+                ->setShape('square')
+                ->toBase64();
+        }
+
+        return $this->attributes['avatar']; 
+    }
 }

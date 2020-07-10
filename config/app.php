@@ -163,6 +163,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Laravolt\Avatar\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -231,6 +232,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Utility' => App\Providers\UtilityServiceProvider::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'Avatar'    => Laravolt\Avatar\Facade::class,
     ],
 
 ];
