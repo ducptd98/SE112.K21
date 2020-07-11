@@ -62,11 +62,13 @@ class PostController extends Controller
         $data->title = $request->title;
         $data->content = $request->content;
         $data->tag = $request->tag;
-        return response()->json([
-            'status'=> 200,
-            'message'=> 'Post created successfully',
-            'data'=>$data
-        ]);
+        if ($data->save()) {
+            return response()->json([
+                'status'=> 200,
+                'message'=> 'Post created successfully',
+                'data'=>$data
+            ]);
+        }
         return response()->json([
             'status'=> 500,
             'message'=> 'Post created fail',
