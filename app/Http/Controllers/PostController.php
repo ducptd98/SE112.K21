@@ -62,6 +62,7 @@ class PostController extends Controller
         $data->title = $request->title;
         $data->content = $request->content;
         $data->tag = $request->tag;
+        $data->user_id = $request->user_id;
         if ($data->save()) {
             return response()->json([
                 'status'=> 200,
@@ -114,7 +115,6 @@ class PostController extends Controller
         $post->content = $request->content;
         $post->tag = $request->tag;
         $post->like = $request->like;
-        $post->user_id = $request->user_id;
         return response()->json([
             'status'=> 200,
             'message'=> 'Post updated successfully',
