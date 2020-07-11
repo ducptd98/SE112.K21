@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Auth::user()->name;
+        // return Auth::user()->name;
         $data = new Post();
         $posts = $data->with('comments')->paginate(25);
         return response()->json($posts);
