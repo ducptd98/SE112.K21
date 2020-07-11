@@ -87,7 +87,7 @@ class PostController extends Controller
         return response()->json([
             'status'=> 200,
             'message'=> 'Comment created successfully',
-            'data'=>$post->comments
+            'data'=>$post
         ]);
     }
 
