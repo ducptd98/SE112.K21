@@ -44,6 +44,7 @@ Route::group(['middleware' => 'cors'], function () {
     $this->get('post_favourite','PostController@get_favourite');
     //API Comment
     $this->resource('comment', 'CommentController');
+    $this->resource('user', 'UserController');
 
     //Auth
     $this->post('auth/register', 'UserController@register');

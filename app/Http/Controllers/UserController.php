@@ -58,4 +58,16 @@ class UserController extends Controller
         }
         return response()->json(['failed_to_create_token'], 500);
     }
+
+    public function show(User $user){
+
+        if ($user) {
+            return response()->json(
+                [
+                    'user' => $user,
+                    'post' => $user->posts
+                ]);
+        }
+        return response()->json(['failed_to_create_token'], 500);
+    }
 } 
