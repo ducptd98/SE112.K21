@@ -88,6 +88,7 @@ class PostController extends Controller
             'status'=> 200,
             'message'=> 'Comment created successfully',
             'data'=>$post,
+            'data'=>$post->comments,
             'user'=>$post->user
         ]);
     }
