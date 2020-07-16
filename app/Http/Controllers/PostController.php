@@ -63,6 +63,7 @@ class PostController extends Controller
         $data->content = $request->content;
         $data->tag = $request->tag;
         $data->user_id = $request->user_id;
+        $data->link = $request->link;
         if ($data->save()) {
             return response()->json([
                 'status'=> 200,
