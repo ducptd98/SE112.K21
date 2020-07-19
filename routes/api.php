@@ -40,6 +40,7 @@ Route::group(['middleware' => 'cors'], function () {
     //API Post
     $this->resource('post', 'PostController');
     $this->get('post_tag','PostController@get_tag');
+    $this->get('post_search','PostController@get_search');
     $this->get('post_recently','PostController@get_recently');
     $this->get('post_favourite','PostController@get_favourite');
     //API Comment
@@ -49,7 +50,13 @@ Route::group(['middleware' => 'cors'], function () {
     //Auth
     $this->post('auth/register', 'UserController@register');
     $this->post('auth/login', 'UserController@login');
+
+
+    // get all tags
+    $this->get('get-all-tag', 'PostController@getAllTag');
+
     $this->group(['middleware' => 'jwt.auth'], function () {
     $this->get('user-info', 'UserController@getUserInfo');
+
     });
 });

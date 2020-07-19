@@ -43,7 +43,8 @@ class CommentController extends Controller
             return response()->json([
                 'status'=> 200,
                 'message'=> 'Comment created successfully',
-                'data'=>$data
+                'data'=>$data,
+                'user'=>$data->user,
             ]);
         }
         return response()->json([

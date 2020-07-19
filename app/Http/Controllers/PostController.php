@@ -9,6 +9,15 @@ use Auth;
 
 class PostController extends Controller
 {
+
+    // Get all Tag
+
+    public function getAllTag(){
+        // return "tag";
+        $data = new Post();
+        $tags = $data->groupBy('tag')->pluck('tag');
+        return response()->json($tags);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -22,9 +31,15 @@ class PostController extends Controller
         return response()->json($posts);
     }
 
+    public function get_search(Request $request){
+        $data = new Post();
+        $posts = $data->with('comments')->with('user')->where('title','like','%'.$request->parameter.'%')->orWhere('tag','like','%'.$request->parameter.'%')->paginate(2);
+        return response()->json($posts);
+    }
+
     public function get_tag(Request $request){
         $data = new Post();
-        $posts = $data->with('comments')->where('tag','like','%'.$request->parameter.'%')->paginate(25);
+        $posts = $data->with('comments')->with('user')->where('tag','like','%'.$request->parameter.'%')->paginate(25);
         return response()->json($posts);
     }
 
@@ -87,7 +102,7 @@ class PostController extends Controller
     {
         return response()->json([
             'status'=> 200,
-            'message'=> 'Comment created successfully',
+            'message'=> 'Get post successfully',
             'data'=>$post,
             'comments'=>$post->comments,
             'user'=>$post->user
@@ -118,11 +133,13 @@ class PostController extends Controller
         $post->content = $request->content;
         $post->tag = $request->tag;
         $post->like = $request->like;
-        return response()->json([
-            'status'=> 200,
-            'message'=> 'Post updated successfully',
-            'data'=>$post
-        ]);
+        if ($post->save()) {
+            return response()->json([
+                'status'=> 200,
+                'message'=> 'Post updated successfully',
+            ]);
+        }
+
         return response()->json([
             'status'=> 500,
             'message'=> 'Post updated fail',

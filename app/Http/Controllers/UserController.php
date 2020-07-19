@@ -70,4 +70,30 @@ class UserController extends Controller
         }
         return response()->json(['failed_to_create_token'], 500);
     }
+
+        /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Model\Post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user)
+    {
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        if ($user->save()) {
+            return response()->json([
+                'status'=> 200,
+                'message'=> 'User updated successfully',
+            ]);
+        }
+
+        return response()->json([
+            'status'=> 500,
+            'message'=> 'User updated fail',
+        ]);
+    }
+
 } 
