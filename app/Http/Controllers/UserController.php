@@ -82,7 +82,7 @@ class UserController extends Controller
     {
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = Hash::make($request->password);
         if ($user->save()) {
             return response()->json([
                 'status'=> 200,
