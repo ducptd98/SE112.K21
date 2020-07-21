@@ -33,13 +33,13 @@ class PostController extends Controller
 
     public function get_search(Request $request){
         $data = new Post();
-        $posts = $data->with('comments')->with('user')->where('title','like','%'.$request->parameter.'%')->orWhere('tag','like','%'.$request->parameter.'%')->paginate(2);
+        $posts = $data->with('comments')->with('user')->where('title','like','%'.$request->q.'%')->orWhere('tag','like','%'.$request->q.'%')->paginate(25);
         return response()->json($posts);
     }
 
     public function get_tag(Request $request){
         $data = new Post();
-        $posts = $data->with('comments')->with('user')->where('tag','like','%'.$request->parameter.'%')->paginate(25);
+        $posts = $data->where('tag',$request->tag)->with('comments')->with('user')->paginate(25);
         return response()->json($posts);
     }
 
