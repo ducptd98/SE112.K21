@@ -41,7 +41,7 @@ class PostController extends Controller
             })
             ->where(function ($query) use ($q) {
                 $query->where('title','like','%'.$q.'%')->orWhere('tag','like','%'.$q.'%');
-            })->paginate(1);
+            })->paginate(25);
             // $posts = $data->with('comments')->with('user')->where('user_id', $request->userid)->where('title','like','%'.$request->q.'%')->orWhere('tag','like','%'.$request->q.'%')->paginate(25);
         }else{
             $posts = $data->with('comments')->with('user')->where('title','like','%'.$request->q.'%')->orWhere('tag','like','%'.$request->q.'%')->paginate(25);
