@@ -33,8 +33,16 @@ class PostController extends Controller
 
     public function get_search(Request $request){
         $data = new Post();
-        if (!empty($request->userid)) {
-            $posts = $data->with('comments')->with('user')->where('user_id', $request->userid)->where('title','like','%'.$request->q.'%')->orWhere('tag','like','%'.$request->q.'%')->paginate(25);
+        $userid = $request->userid;
+        $q = $request->q;
+        if (!empty($userid)) {
+            $posts =  $data->where(function ($query) use ($userid) {
+                $query->where('user_id', '=', $userid);
+            })
+            ->where(function ($query) use ($q) {
+                $query->where('title','like','%'.$q.'%')->orWhere('tag','like','%'.$q.'%');
+            })->paginate(1);
+            // $posts = $data->with('comments')->with('user')->where('user_id', $request->userid)->where('title','like','%'.$request->q.'%')->orWhere('tag','like','%'.$request->q.'%')->paginate(25);
         }else{
             $posts = $data->with('comments')->with('user')->where('title','like','%'.$request->q.'%')->orWhere('tag','like','%'.$request->q.'%')->paginate(25);
         }
