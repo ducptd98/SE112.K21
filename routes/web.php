@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return Category_Model::all();
 });
+
+Route::get('comment', 'CommentController@index');

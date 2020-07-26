@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Comment;
 use Illuminate\Http\Request;
+use App\Events\Message;
 
 class CommentController extends Controller
 {
@@ -35,10 +36,11 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        $data = new Comment();
+        $data = new Comment;
         $data->content = $request->content;
         $data->post_id = $request->post_id;
         $data->user_id = $request->user_id;
+        event(new Message(['data'=>$data]));
         if($data->save()){
             return response()->json([
                 'status'=> 200,
