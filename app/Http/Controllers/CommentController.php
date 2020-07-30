@@ -97,6 +97,7 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
+        event(new Message(['data'=>$comment]));
         if($comment->delete()){
             return 200;
         }
